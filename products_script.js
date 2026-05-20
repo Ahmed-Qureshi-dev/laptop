@@ -1,28 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const products = [
-      { id: 1, name: "Dell XPS 15 9530", cat: "business", brand: "dell", price: "Rs. 295,000", old: "Rs. 320,000", spec: "i7-13th Gen • 32GB RAM • 1TB SSD • RTX 4050 • 4K OLED", img: "assets/dell laptop.png", badge: "New" },
-      { id: 2, name: "ROG Strix G16", cat: "gaming", brand: "asus", price: "Rs. 345,000", old: "Rs. 380,000", spec: "RTX 4060 • i7-13650HX • 16GB DDR5 • 1TB • 165Hz", img: "assets/laptop png.png", badge: "Hot" },
-      { id: 3, name: "HP Spectre x360", cat: "creator", brand: "hp", price: "Rs. 275,000", old: "Rs. 290,000", spec: "i7-13th Gen • 16GB • 512GB • 4K Touch • Pen Included", img: "assets/hp-bg.png", badge: "" },
-      { id: 4, name: "Lenovo Legion 5i Pro", cat: "gaming", brand: "lenovo", price: "Rs. 310,000", old: "Rs. 335,000", spec: "RTX 4050 • i7-13th Gen • 16GB • 1TB • QHD 165Hz", img: "assets/laptop lenovo.png", badge: "" },
-      { id: 5, name: "MacBook Pro 14 M3", cat: "creator", brand: "apple", price: "Rs. 485,000", old: "Rs. 510,000", spec: "M3 Pro Chip • 18GB RAM • 512GB SSD • Space Black", img: "assets/premium laptop.png", badge: "New" },
-      { id: 6, name: "ASUS Zenbook Duo 2024", cat: "creator", brand: "asus", price: "Rs. 395,000", old: "Rs. 420,000", spec: "Dual Screen • Ultra 9 • 32GB • 1TB • 3K 120Hz OLED", img: "assets/feature_product_no_bg.png", badge: "Hot" },
-      { id: 7, name: "Dell Latitude 7440", cat: "business", brand: "dell", price: "Rs. 225,000", old: "Rs. 240,000", spec: "i5-13th Gen • 16GB • 512GB • vPro • Backlit KB", img: "assets/dell-bg.png", badge: "" },
-      { id: 8, name: "HP Victus 15 2023", cat: "gaming", brand: "hp", price: "Rs. 195,000", old: "Rs. 215,000", spec: "RTX 3050 • i5-12th Gen • 16GB • 512GB • Performance Blue", img: "assets/hp-bg.png", badge: "Sale" },
-      { id: 9, name: "Lenovo ThinkPad X1 Carbon", cat: "business", brand: "lenovo", price: "Rs. 380,000", old: "Rs. 410,000", spec: "i7-13th Gen • 16GB • 1TB • WUXGA • Carbon Fiber", img: "assets/lenovo-bg.png", badge: "" },
-      { id: 10, name: "MacBook Air M2 13\"", cat: "student", brand: "apple", price: "Rs. 295,000", old: "Rs. 315,000", spec: "M2 Chip • 8GB RAM • 256GB SSD • Midnight Finish", img: "assets/premium-laptop.webp", badge: "" },
-      { id: 11, name: "ASUS TUF Gaming F15", cat: "gaming", brand: "asus", price: "Rs. 245,000", old: "Rs. 260,000", spec: "RTX 4050 • i7-12th Gen • 16GB • 512GB • 144Hz", img: "assets/laptop png.png", badge: "" },
-      { id: 12, name: "Dell Inspiron 16 5630", cat: "student", brand: "dell", price: "Rs. 185,000", old: "Rs. 195,000", spec: "i7-13th Gen • 16GB • 512GB • Platinum Silver", img: "assets/dell laptop.png", badge: "" },
-      { id: 13, name: "HP Envy 13 x360", cat: "student", brand: "hp", price: "Rs. 165,000", old: "Rs. 180,000", spec: "i5-12th Gen • 8GB • 512GB • Touch • 2-in-1", img: "assets/hp-bg.png", badge: "" },
-      { id: 14, name: "Lenovo IdeaPad Slim 3", cat: "student", brand: "lenovo", price: "Rs. 125,000", old: "Rs. 140,000", spec: "Ryzen 5 • 8GB • 512GB • FHD IPS • Abyss Blue", img: "assets/laptop lenovo.png", badge: "Value" },
-      { id: 15, name: "Alienware x16 R1", cat: "gaming", brand: "dell", price: "Rs. 750,000", old: "Rs. 820,000", spec: "RTX 4080 • i9-13900HK • 32GB • 2TB • QHD+ 240Hz", img: "assets/dell-bg.png", badge: "Hot" },
-      { id: 16, name: "HP Omen 16 2023", cat: "gaming", brand: "hp", price: "Rs. 325,000", old: "Rs. 350,000", spec: "RTX 4060 • Ryzen 7 7840HS • 16GB • 1TB • QHD", img: "assets/hp-bg.png", badge: "" },
-      { id: 17, name: "Lenovo Yoga 9i Gen 8", cat: "creator", brand: "lenovo", price: "Rs. 365,000", old: "Rs. 390,000", spec: "i7-13th Gen • 16GB • 1TB • 4K OLED • Rotating Soundbar", img: "assets/lenovo-bg.png", badge: "" },
-      { id: 18, name: "Dell Precision 5680", cat: "creator", brand: "dell", price: "Rs. 595,000", old: "Rs. 650,000", spec: "RTX 2000 Ada • i9-13th Gen • 64GB • 1TB • Workstation", img: "assets/dell-bg.png", badge: "" },
-      { id: 19, name: "ROG Flow Z13 2023", cat: "gaming", brand: "asus", price: "Rs. 425,000", old: "Rs. 460,000", spec: "Tablet Mode • i9-13900H • RTX 4050 • 16GB • Nebula Display", img: "assets/laptop png.png", badge: "New" },
-      { id: 20, name: "MacBook Pro 16 M3 Max", cat: "creator", brand: "apple", price: "Rs. 950,000", old: "Rs. 1,050,000", spec: "M3 Max (14-Core) • 64GB • 2TB • Liquid Retina XDR", img: "assets/premium laptop.png", badge: "Top Tier" }
-    ];
-
-    const WA_NUMBER = '923212765705';
+    // Using global products and WA_NUMBER from products_data.js
 
     window.orderNow = function(name, spec, price) {
       const msg = `Hello Alfa Biz! I want to ORDER NOW:
