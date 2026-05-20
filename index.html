@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alfa Biz - Karachi's #1 Tech & Laptop Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    :root {
+      --green: #00f2fe;
+      --green-bright: #00f2fe;
+      --green-neon: #39ff14;
+      --bg: #050a0e;
+      --bg2: #080f14;
+      --card: rgba(0,20,30,0.85);
+      --border: rgba(0,242,254,0.18);
+      --text: #e0eaf0;
+      --muted: #7a9aaa;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ═══ PRELOADER ═══ */
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #020608;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+
+    .hud-corner {
+      position: absolute; width: 40px; height: 40px;
+      border-color: var(--green); border-style: solid; border-width: 0;
+    }
+    .hud-corner.tl { top: 20px; left: 20px; border-top-width: 2px; border-left-width: 2px; }
+    .hud-corner.tr { top: 20px; right: 20px; border-top-width: 2px; border-right-width: 2px; }
+    .hud-corner.bl { bottom: 20px; left: 20px; border-bottom-width: 2px; border-left-width: 2px; }
+    .hud-corner.br { bottom: 20px; right: 20px; border-bottom-width: 2px; border-right-width: 2px; }
+
+    .loader-content { text-align: center; }
+    .loader-orbital-wrap {
+      position: relative; width: 140px; height: 140px;
+      margin: 0 auto 2rem;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .loader-ring {
+      position: absolute; border-radius: 50%;
+      border: 2px solid transparent;
+    }
+    .loader-ring-1 {
+      width: 140px; height: 140px;
+      border-top-color: var(--green);
+      animation: spin 1.5s linear infinite;
+    }
+    .loader-ring-2 {
+      width: 110px; height: 110px;
+      border-right-color: rgba(0,242,254,0.5);
+      animation: spin 2s linear infinite reverse;
+    }
+    .loader-ring-3 {
+      width: 80px; height: 80px;
+      border-bottom-color: rgba(0,242,254,0.25);
+      animation: spin 3s linear infinite;
+    }
+    .loader-logo {
+      width: 55px; height: 55px; object-fit: contain;
+      position: relative; z-index: 2;
+    }
+    .loader-status {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem; letter-spacing: 4px;
+      color: var(--green); margin-bottom: 1.5rem;
+      animation: blink 1s ease infinite;
+    }
+    .loader-bar-wrap { width: 260px; margin: 0 auto; }
+    .loader-bar-label {
+      display: flex; justify-content: space-between;
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      color: var(--muted); margin-bottom: 0.5rem; letter-spacing: 2px;
+    }
+    .loader-bar-track {
+      height: 3px; background: rgba(0,242,254,0.1);
+      border-radius: 2px; overflow: hidden;
+    }
+    .loader-bar {
+      height: 100%; width: 0; background: var(--green);
+      box-shadow: 0 0 10px var(--green);
+      transition: width 0.05s linear;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+    /* ═══ NAVBAR ═══ */
+    .glass-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(5,10,14,0.85);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+    }
+    .nav-container-inner {
+      max-width: 1300px; margin: 0 auto;
+      height: 70px; display: flex; align-items: center;
+      justify-content: space-between;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 0.8rem; }
+    .logo-img { height: 42px; width: auto; }
+    .logo-text {
+      font-family: 'Orbitron', monospace; font-size: 1rem;
+      font-weight: 900; color: var(--green); letter-spacing: 3px;
+      display: none;
+    }
+    .nav-menu { list-style: none; display: flex; gap: 2.5rem; }
+    .nav-menu a {
+      text-decoration: none; color: var(--muted);
+      font-family: 'Rajdhani', sans-serif; font-weight: 600;
+      font-size: 0.85rem; letter-spacing: 2px;
+      transition: color 0.3s;
+      text-transform: uppercase;
+    }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--green); }
+    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .nav-cta {
+      background: var(--green); color: #000;
+      border: none; padding: 0.6rem 1.5rem;
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      font-weight: 700; letter-spacing: 2px; cursor: pointer;
+      border-radius: 6px; transition: all 0.3s;
+      text-transform: uppercase;
+    }
+    .nav-cta:hover { box-shadow: 0 0 20px rgba(0,242,254,0.5); transform: translateY(-1px); }
+    .menu-btn {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer;
+      padding: 5px;
+    }
+    .menu-btn span {
+      display: block; width: 24px; height: 2px;
+      background: var(--green); border-radius: 2px;
+      transition: all 0.3s;
+    }
+
+    /* ═══ DRAWER ═══ */
+    .drawer-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.7); z-index: 1100;
+    }
+    .drawer-overlay.open { display: block; }
+    .drawer {
+      position: fixed; top: 0; right: -320px; width: 300px;
+      height: 100vh; background: #080f14;
+      border-left: 1px solid var(--border);
+      z-index: 1200; padding: 2rem 1.5rem;
+      transition: right 0.35s ease;
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .drawer.open { right: 0; }
+    .drawer-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: none; border: 1px solid var(--border);
+      color: var(--green); font-size: 1.4rem; cursor: pointer;
+      width: 36px; height: 36px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .drawer-logo { height: 50px; width: auto; margin-top: 1rem; }
+    .drawer-links { list-style: none; margin-top: 1rem; }
+    .drawer-links li { border-bottom: 1px solid var(--border); }
+    .drawer-links a {
+      display: block; padding: 0.9rem 0;
+      color: var(--text); text-decoration: none;
+      font-family: 'Rajdhani', sans-serif; font-weight: 600;
+      font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .drawer-links a:hover { color: var(--green); }
+    .drawer-socials { display: flex; gap: 1rem; }
+    .drawer-soc {
+      width: 36px; height: 36px; border: 1px solid var(--border);
+      border-radius: 6px; display: flex; align-items: center;
+      justify-content: center; color: var(--muted);
+      text-decoration: none; transition: all 0.3s;
+    }
+    .drawer-soc:hover { color: var(--green); border-color: var(--green); }
+    .drawer-cta { width: 100%; text-align: center; }
+    .drawer-status {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      color: var(--green); letter-spacing: 2px;
+    }
+    .drawer-status span {
+      width: 8px; height: 8px; background: var(--green-neon);
+      border-radius: 50%; animation: pulse 2s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+    /* ═══ HERO ═══ */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      padding: 100px 2rem 4rem;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 50% 60%, rgba(0,242,254,0.08) 0%, transparent 70%),
+        linear-gradient(180deg, #020608 0%, #050a0e 100%);
+    }
+    .hero-bg::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(0,242,254,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0,242,254,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-content {
+      position: relative; z-index: 2;
+      text-align: center; max-width: 900px;
+    }
+    .hero-badge {
+      display: inline-block;
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      letter-spacing: 3px; color: var(--green);
+      border: 1px solid var(--border); padding: 0.4rem 1.2rem;
+      border-radius: 4px; margin-bottom: 2rem;
+      background: rgba(0,242,254,0.05);
+    }
+    .hero-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2.2rem, 6vw, 5rem);
+      font-weight: 900; line-height: 1.05;
+      color: #fff; margin-bottom: 1.5rem;
+      text-shadow: 0 0 40px rgba(0,242,254,0.1);
+    }
+    .hero-title .green {
+      color: var(--green);
+      text-shadow: 0 0 30px rgba(0,242,254,0.5);
+    }
+    .hero-sub {
+      font-size: 1.15rem; color: var(--muted);
+      font-weight: 400; max-width: 600px; margin: 0 auto 2.5rem;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-g {
+      background: var(--green); color: #000;
+      border: none; padding: 0.85rem 2.2rem;
+      font-family: 'Orbitron', monospace; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 2px; cursor: pointer;
+      border-radius: 8px; transition: all 0.3s; text-transform: uppercase;
+    }
+    .btn-g:hover { box-shadow: 0 0 30px rgba(0,242,254,0.6); transform: translateY(-2px); }
+    .btn-outline {
+      background: transparent; color: var(--green);
+      border: 1px solid var(--green); padding: 0.85rem 2.2rem;
+      font-family: 'Orbitron', monospace; font-size: 0.75rem;
+      font-weight: 700; letter-spacing: 2px; cursor: pointer;
+      border-radius: 8px; transition: all 0.3s; text-transform: uppercase;
+    }
+    .btn-outline:hover { background: rgba(0,242,254,0.1); transform: translateY(-2px); }
+
+    /* ═══ ABOUT ═══ */
+    #about {
+      padding: 6rem 2rem;
+      position: relative; overflow: hidden;
+    }
+    #about::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(0,242,254,0.04) 0%, transparent 70%);
+    }
+    .about-wrap {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: center; position: relative; z-index: 2;
+    }
+    .about-label {
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      letter-spacing: 4px; color: var(--green); margin-bottom: 1rem;
+    }
+    .about-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.6rem, 3vw, 2.5rem);
+      font-weight: 900; color: #fff; margin-bottom: 1.5rem;
+      line-height: 1.15;
+    }
+    .about-title span { color: var(--green); }
+    .about-lead {
+      font-size: 1.15rem; color: var(--text); font-weight: 600;
+      margin-bottom: 1.2rem; line-height: 1.6;
+    }
+    .about-desc {
+      font-size: 1rem; color: var(--muted); line-height: 1.8;
+      margin-bottom: 1.5rem;
+    }
+    .about-pills { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .about-pill {
+      display: flex; align-items: center; gap: 0.5rem;
+      border: 1px solid var(--border); border-radius: 6px;
+      padding: 0.4rem 0.9rem;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.85rem;
+      font-weight: 600; color: var(--green); letter-spacing: 1px;
+      background: rgba(0,242,254,0.04);
+    }
+    .about-pill i { font-size: 0.8rem; }
+    .about-right { display: flex; flex-direction: column; gap: 1.5rem; }
+    .about-stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+    }
+    .about-stat {
+      background: var(--card);
+      border: 1px solid var(--border); border-radius: 14px;
+      padding: 1.5rem; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .about-stat::before {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px; background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+    .about-stat-num {
+      font-family: 'Orbitron', monospace;
+      font-size: 2rem; font-weight: 900; color: var(--green);
+      text-shadow: 0 0 20px rgba(0,242,254,0.4);
+    }
+    .about-stat-label {
+      font-size: 0.85rem; color: var(--muted);
+      font-weight: 600; letter-spacing: 1px; margin-top: 0.3rem;
+    }
+    .about-highlights { display: flex; flex-direction: column; gap: 0.8rem; }
+    .about-hi {
+      display: flex; align-items: flex-start; gap: 1rem;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 10px; padding: 1rem 1.2rem;
+    }
+    .about-hi-icon {
+      width: 36px; height: 36px; min-width: 36px;
+      border-radius: 8px; background: rgba(0,242,254,0.1);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--green); font-size: 0.85rem;
+    }
+    .about-hi-text h4 {
+      font-family: 'Rajdhani', sans-serif; font-weight: 700;
+      font-size: 0.95rem; color: #fff; letter-spacing: 1px;
+      margin-bottom: 0.2rem;
+    }
+    .about-hi-text p {
+      font-size: 0.82rem; color: var(--muted); line-height: 1.5;
+    }
+
+    /* ═══ PRODUCTS ═══ */
+    #products {
+      padding: 5rem 2rem 4rem;
+    }
+    .section-wrap { max-width: 1300px; margin: 0 auto; }
+    .section-label {
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      letter-spacing: 4px; color: var(--green); margin-bottom: 0.7rem;
+    }
+    .section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.6rem, 3.5vw, 2.8rem);
+      font-weight: 900; color: #fff; margin-bottom: 0.7rem;
+    }
+    .section-sub { color: var(--muted); font-size: 1rem; max-width: 500px; }
+    .products-header { margin-bottom: 3rem; }
+
+    .filter-bar {
+      display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+    }
+    .fbtn {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--muted); padding: 0.45rem 1.2rem;
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      letter-spacing: 2px; cursor: pointer; border-radius: 6px;
+      transition: all 0.3s; text-transform: uppercase;
+    }
+    .fbtn:hover, .fbtn.active {
+      background: rgba(0,242,254,0.1); color: var(--green);
+      border-color: var(--green);
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .pcard {
+      background: var(--card);
+      border: 1px solid var(--border); border-radius: 16px;
+      padding: 1.5rem; position: relative; overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+    .pcard:hover {
+      transform: translateY(-5px);
+      border-color: var(--green);
+      box-shadow: 0 10px 25px rgba(0, 242, 254, 0.15);
+    }
+    .pcard.hidden { display: none; }
+    .pbadge {
+      position: absolute; top: 1rem; right: 1rem;
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      letter-spacing: 2px; padding: 0.25rem 0.7rem;
+      border-radius: 4px; font-weight: 700;
+    }
+    .b-hot { background: rgba(255,50,50,0.15); color: #ff5555; border: 1px solid rgba(255,80,80,0.3); }
+    .b-new { background: rgba(0,242,254,0.1); color: var(--green); border: 1px solid var(--border); }
+    .b-sale { background: rgba(255,180,0,0.12); color: #ffb400; border: 1px solid rgba(255,180,0,0.3); }
+    .pimg {
+      height: 160px; display: flex; align-items: center;
+      justify-content: center; margin-bottom: 1rem;
+      border-radius: 10px; background: rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+    .pimg img { max-height: 140px; max-width: 100%; object-fit: contain; }
+    .stars { display:flex; gap:2px; margin-bottom:0.5rem; color:#ffb400; font-size:0.8rem; }
+    .pname {
+      font-family: 'Orbitron', monospace; font-size: 0.85rem;
+      font-weight: 700; color: #fff; margin-bottom: 0.4rem;
+      letter-spacing: 1px;
+    }
+    .pspec { display: none; }
+    .pfooter {
+      display: flex; justify-content: space-between; align-items: center;
+      margin-top: 1rem;
+    }
+    .pprice { font-family: 'Orbitron', monospace; font-size: 1rem; color: var(--green); font-weight: 700; }
+    .pprice .old { font-size: 0.72rem; color: var(--muted); text-decoration: line-through; display: block; margin-bottom: 1px; }
+    .btn-order {
+      padding: 0.55rem 0.9rem;
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      letter-spacing: 1px; border-radius: 7px; cursor: pointer;
+      transition: all 0.3s; border: none; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      background: #25D366; color: #fff;
+    }
+    .btn-order:hover { background: #1da851; box-shadow: 0 0 15px rgba(37,211,102,0.4); }
+
+    /* HOT BANNER */
+    .hot-banner-section {
+      max-width: 1300px; margin: 3rem auto;
+      padding: 0 2rem;
+    }
+    .hot-banner-link { display: block; }
+    .hot-banner-img-wrap {
+      position: relative; border-radius: 16px; overflow: hidden;
+      border: 1px solid var(--border);
+      transition: border-color 0.3s;
+      max-height: 280px;
+    }
+    .hot-banner-img-wrap:hover { border-color: rgba(0,242,254,0.5); }
+    .hot-banner-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      display: block;
+    }
+    .hot-banner-badge {
+      position: absolute; top: 1.2rem; left: 1.2rem;
+      background: rgba(255,50,50,0.85);
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      letter-spacing: 3px; color: #fff;
+      padding: 0.35rem 0.9rem; border-radius: 5px;
+    }
+
+    /* ═══ FEATURES ═══ */
+    #features {
+      padding: 6rem 2rem; position: relative; overflow: hidden;
+    }
+    #features::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(0,242,254,0.04) 0%, transparent 70%);
+    }
+    .features-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1.2rem; margin-top: 3rem; position: relative; z-index: 2;
+    }
+    .fcard {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 2rem; position: relative; overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .fcard:hover { transform: translateY(-4px); border-color: rgba(0,242,254,0.35); }
+    .fcard-inner { position: relative; z-index: 2; }
+    .ficon {
+      width: 50px; height: 50px; border-radius: 12px;
+      background: rgba(0,242,254,0.08); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--green); font-size: 1.2rem; margin-bottom: 1rem;
+    }
+    .fword {
+      font-family: 'Orbitron', monospace; font-size: 0.9rem;
+      font-weight: 700; color: #fff; margin-bottom: 0.5rem;
+      letter-spacing: 2px;
+    }
+    .fdesc { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+    .pillar-glow-line {
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .fcard:hover .pillar-glow-line { opacity: 1; }
+
+    /* ═══ WHY + CONTACT ═══ */
+    #why {
+      padding: 6rem 2rem;
+      background: linear-gradient(180deg, transparent, rgba(0,242,254,0.02));
+    }
+    .why-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem;
+      align-items: start;
+    }
+    .why-item {
+      display: flex; gap: 1.2rem; align-items: flex-start;
+      padding: 1.2rem 0; border-bottom: 1px solid var(--border);
+    }
+    .why-num {
+      font-family: 'Orbitron', monospace; font-size: 1.5rem;
+      font-weight: 900; color: rgba(0,242,254,0.2); min-width: 50px;
+    }
+    .why-h4 {
+      font-family: 'Orbitron', monospace; font-size: 0.8rem;
+      font-weight: 700; color: #fff; letter-spacing: 2px;
+      margin-bottom: 0.4rem;
+    }
+    .why-p { font-size: 0.9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ═══ CONTACT CARD ═══ */
+    .contact-glass {
+      background: rgba(5,15,20,0.9);
+      border: 1px solid var(--border); border-radius: 20px;
+      padding: 2.5rem; position: relative; overflow: hidden;
+    }
+    .contact-glass::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--green), transparent);
+    }
+    .cg-label {
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      letter-spacing: 4px; color: var(--green); margin-bottom: 1.5rem;
+    }
+    .cg-info-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+    .cg-info-item {
+      display: flex; align-items: center; gap: 0.8rem;
+      background: rgba(0,0,0,0.3); border: 1px solid var(--border);
+      border-radius: 10px; padding: 0.8rem;
+    }
+    .cg-info-icon {
+      width: 32px; height: 32px; min-width: 32px;
+      background: rgba(0,242,254,0.08); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--green); font-size: 0.8rem;
+    }
+    .cg-info-label {
+      font-family: 'Orbitron', monospace; font-size: 0.55rem;
+      letter-spacing: 2px; color: var(--muted); margin-bottom: 0.15rem;
+    }
+    .cg-info-val { font-size: 0.85rem; color: #fff; font-weight: 600; }
+    .cg-info-val a { color: var(--green); text-decoration: none; }
+
+    /* New contact form — WhatsApp-first style */
+    .cg-wa-block {
+      background: rgba(37,211,102,0.08);
+      border: 1px solid rgba(37,211,102,0.25);
+      border-radius: 14px; padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .cg-wa-title {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Orbitron', monospace; font-size: 0.72rem;
+      font-weight: 700; color: #25D366; letter-spacing: 2px;
+      margin-bottom: 0.8rem;
+    }
+    .cg-wa-title i { font-size: 1.1rem; }
+    .cg-wa-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 1rem; line-height: 1.5; }
+    .cg-wa-btn {
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      width: 100%; padding: 0.85rem;
+      background: #25D366; color: #fff; border: none;
+      border-radius: 10px; font-family: 'Orbitron', monospace;
+      font-size: 0.72rem; font-weight: 700; letter-spacing: 2px;
+      cursor: pointer; text-decoration: none;
+      transition: all 0.3s; text-transform: uppercase;
+    }
+    .cg-wa-btn:hover { background: #1da851; box-shadow: 0 0 25px rgba(37,211,102,0.4); }
+
+    .cg-divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+    .cg-divider::before, .cg-divider::after {
+      content: ''; flex: 1; height: 1px; background: var(--border);
+    }
+    .cg-divider span {
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      color: var(--muted); letter-spacing: 2px; white-space: nowrap;
+    }
+
+    .cg-inputs { display: flex; flex-direction: column; gap: 0.7rem; }
+    .cg-input-group { display: grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; }
+    .cg-input {
+      width: 100%; background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border); border-radius: 8px;
+      padding: 0.75rem 1rem; color: #fff;
+      font-family: 'Rajdhani', sans-serif; font-size: 0.95rem;
+      transition: border-color 0.3s; outline: none;
+    }
+    .cg-input::placeholder { color: var(--muted); }
+    .cg-input:focus { border-color: var(--green); }
+    .cg-textarea { resize: vertical; min-height: 90px; }
+    .cg-send {
+      width: 100%; padding: 0.9rem;
+      background: var(--green); color: #000; border: none;
+      border-radius: 10px; font-family: 'Orbitron', monospace;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 3px;
+      cursor: pointer; transition: all 0.3s; text-transform: uppercase;
+    }
+    .cg-send:hover { box-shadow: 0 0 25px rgba(0,242,254,0.5); transform: translateY(-1px); }
+
+    .cg-social-connect { margin-top: 1.5rem; }
+    .cg-social-label {
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      letter-spacing: 3px; color: var(--muted); margin-bottom: 0.8rem;
+    }
+    .cg-socials { display: flex; gap: 0.6rem; }
+    .cg-social {
+      width: 38px; height: 38px; border: 1px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; color: var(--muted);
+      text-decoration: none; transition: all 0.3s;
+    }
+    .cg-social:hover { color: var(--green); border-color: var(--green); background: rgba(0,242,254,0.05); }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      border-top: 1px solid var(--border);
+      background: #030709; padding: 4rem 2rem 0;
+    }
+    .footer-inner {
+      max-width: 1300px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem; padding-bottom: 3rem;
+    }
+    .footer-logo { height: 50px; width: auto; }
+    .footer-logo-text {
+      font-family: 'Orbitron', monospace; font-size: 1.2rem;
+      font-weight: 900; color: var(--green); letter-spacing: 4px;
+      display: none;
+    }
+    .footer-desc { color: var(--muted); font-size: 0.9rem; line-height: 1.7; margin-top: 1rem; }
+    .footer-h {
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      letter-spacing: 3px; color: var(--green); margin-bottom: 1.2rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; }
+    .footer-links a {
+      color: var(--muted); text-decoration: none; font-size: 0.9rem;
+      transition: color 0.3s; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .footer-links a:hover { color: var(--green); }
+    .footer-links a i { font-size: 0.6rem; }
+    .footer-addr { color: var(--muted); font-size: 0.9rem; line-height: 1.9; }
+    .footer-bottom {
+      max-width: 1300px; margin: 0 auto;
+      border-top: 1px solid var(--border); padding: 1.5rem 0;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: 0.85rem; color: var(--muted); letter-spacing: 1px; }
+    .socials { display: flex; gap: 0.6rem; }
+    .soc {
+      width: 36px; height: 36px; border: 1px solid var(--border);
+      border-radius: 8px; display: flex; align-items: center;
+      justify-content: center; color: var(--muted);
+      text-decoration: none; transition: all 0.3s;
+    }
+    .soc:hover { color: var(--green); border-color: var(--green); }
+
+    /* WhatsApp Float */
+    .wa-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+      width: 56px; height: 56px; border-radius: 50%;
+      background: #25D366;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.5);
+      transition: all 0.3s;
+    }
+    .wa-float:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.7); }
+    .wa-float svg { width: 28px; height: 28px; fill: #fff; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ═══ PRODUCT DETAIL MODAL ═══ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2500;
+      background: rgba(2, 6, 8, 0.85);
+      backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.4s ease, visibility 0.4s ease;
+      padding: 1rem;
+    }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    
+    .modal-container {
+      background: #060e14;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      width: 100%; max-width: 900px;
+      min-height: 500px;
+      display: grid; grid-template-columns: 1fr 1.2fr;
+      position: relative; overflow: hidden;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 242, 254, 0.15);
+      transform: translateY(30px) scale(0.95);
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.open .modal-container {
+      transform: translateY(0) scale(1);
+    }
+    
+    .modal-close {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      background: rgba(0,0,0,0.5); border: 1px solid var(--border);
+      color: var(--green); font-size: 1.5rem; cursor: pointer;
+      width: 38px; height: 38px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; z-index: 10;
+    }
+    .modal-close:hover {
+      background: var(--green); color: #000;
+      box-shadow: 0 0 15px var(--green);
+    }
+    
+    .modal-left {
+      background: rgba(255, 255, 255, 0.02);
+      border-right: 1px solid var(--border);
+      padding: 2.5rem;
+      display: flex; flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+    .modal-brand-badge {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem; color: var(--green);
+      letter-spacing: 2px;
+      align-self: flex-start;
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      padding: 0.3rem 0.8rem; border-radius: 4px;
+      background: rgba(0, 242, 254, 0.05);
+    }
+    .modal-img-wrap {
+      width: 100%; height: 260px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 1.5rem 0;
+    }
+    .modal-img-wrap img {
+      max-width: 100%; max-height: 240px;
+      object-fit: contain;
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,0.5));
+      transition: transform 0.5s ease;
+    }
+    .modal-img-wrap:hover img {
+      transform: scale(1.05);
+    }
+    .modal-price-tag {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.1rem; font-weight: 700;
+      color: #000; background: var(--green);
+      padding: 0.5rem 1.5rem; border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 242, 254, 0.3);
+      letter-spacing: 1px;
+    }
+    
+    .modal-right {
+      padding: 2.5rem;
+      display: flex; flex-direction: column;
+      overflow-y: auto; max-height: 90vh;
+    }
+    .modal-category {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem; color: var(--muted);
+      letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .modal-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.6rem; font-weight: 900;
+      color: #fff; line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .modal-price {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.5rem; font-weight: 700;
+      color: var(--green); margin-bottom: 1.2rem;
+    }
+    .modal-divider {
+      height: 1px; background: var(--border);
+      margin-bottom: 1.2rem;
+    }
+    .modal-section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.65rem; color: var(--muted);
+      letter-spacing: 2px; margin-bottom: 0.8rem;
+    }
+    .modal-specs {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 0.5rem; margin-bottom: 1.5rem;
+      padding: 0;
+    }
+    .modal-specs li {
+      font-size: 0.9rem; color: var(--text);
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .modal-specs li::before {
+      content: '⚡'; color: var(--green); font-size: 0.8rem;
+    }
+    .modal-description {
+      font-size: 0.9rem; color: var(--muted);
+      line-height: 1.6; margin-bottom: 1.5rem;
+    }
+    
+    .modal-meta-grid {
+      display: flex; flex-direction: column; gap: 0.6rem;
+      background: rgba(0,0,0,0.3); border: 1px solid rgba(0,242,254,0.1);
+      padding: 1rem; border-radius: 10px; margin-bottom: 1.8rem;
+    }
+    .meta-row {
+      display: flex; justify-content: space-between; font-size: 0.85rem;
+    }
+    .meta-label { color: var(--muted); }
+    .meta-val { color: #fff; font-weight: 600; }
+    .meta-val.val-green {
+      color: var(--green-neon); display: flex; align-items: center; gap: 0.4rem;
+    }
+    .pulse-dot {
+      width: 7px; height: 7px; background: var(--green-neon);
+      border-radius: 50%; display: inline-block;
+      box-shadow: 0 0 8px var(--green-neon);
+      animation: pulse-ring 1.5s infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(57, 255, 20, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(57, 255, 20, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(57, 255, 20, 0); }
+    }
+    
+    .modal-actions {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem;
+    }
+    .modal-btn-order {
+      background: var(--green); color: #000; border: none;
+      padding: 0.9rem 1.2rem; font-family: 'Orbitron', monospace;
+      font-size: 0.75rem; font-weight: 900; letter-spacing: 2px;
+      border-radius: 8px; cursor: pointer; transition: all 0.3s;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+    }
+    .modal-btn-order:hover {
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.5);
+      transform: translateY(-1px);
+    }
+    .modal-btn-inquire {
+      background: transparent; color: var(--green);
+      border: 1px solid var(--border);
+      padding: 0.9rem 1.2rem; font-family: 'Orbitron', monospace;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 2px;
+      border-radius: 8px; cursor: pointer; transition: all 0.3s;
+    }
+    .modal-btn-inquire:hover {
+      background: rgba(0, 242, 254, 0.05);
+      border-color: var(--green);
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .nav-menu { display: none; }
+      .menu-btn { display: flex; }
+      .products-grid { grid-template-columns: 1fr; }
+      .features-grid { grid-template-columns: 1fr; }
+      .about-wrap { grid-template-columns: 1fr; gap: 2.5rem; }
+      .why-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+      .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+      .cg-input-group { grid-template-columns: 1fr; }
+      .cg-info-grid { grid-template-columns: 1fr; }
+
+      .modal-container {
+        grid-template-columns: 1fr;
+        max-height: 85vh;
+        overflow-y: auto;
+      }
+      .modal-left {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 1.5rem;
+      }
+      .modal-img-wrap { height: 180px; margin: 1rem 0; }
+      .modal-img-wrap img { max-height: 160px; }
+      .modal-right { padding: 1.5rem; max-height: none; }
+      .modal-actions { grid-template-columns: 1fr; gap: 0.8rem; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══ PRELOADER ═══ -->
+  <div id="preloader">
+    <div class="hud-corner tl"></div>
+    <div class="hud-corner tr"></div>
+    <div class="hud-corner bl"></div>
+    <div class="hud-corner br"></div>
+    <div class="loader-content">
+      <div class="loader-orbital-wrap">
+        <div class="loader-ring loader-ring-1"></div>
+        <div class="loader-ring loader-ring-2"></div>
+        <div class="loader-ring loader-ring-3"></div>
+        <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="loader-logo"
+          onerror="this.style.display='none'">
+      </div>
+      <div class="loader-status">INITIALIZING SYSTEMS</div>
+      <div class="loader-bar-wrap">
+        <div class="loader-bar-label">
+          <span>BOOT SEQUENCE</span>
+          <span id="loader-pct">0%</span>
+        </div>
+        <div class="loader-bar-track">
+          <div class="loader-bar" id="loader-bar-fill"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ DRAWER ═══ -->
+  <div class="drawer-overlay" id="overlay" onclick="toggleDrawer()"></div>
+  <div class="drawer" id="drawer">
+    <button class="drawer-close" onclick="toggleDrawer()">×</button>
+    <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="drawer-logo"
+      onerror="this.style.display='none'" />
+    <ul class="drawer-links">
+      <li><a href="index.html" onclick="toggleDrawer()">Home</a></li>
+      <li><a href="#about" onclick="toggleDrawer()">About</a></li>
+      <li><a href="products.html">Products</a></li>
+      <li><a href="#features" onclick="toggleDrawer()">Features</a></li>
+      <li><a href="#why" onclick="toggleDrawer()">Contact</a></li>
+    </ul>
+    <div class="drawer-socials">
+      <a class="drawer-soc" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a class="drawer-soc" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+      <a class="drawer-soc" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+      <a class="drawer-soc" href="https://wa.me/923212765705" target="_blank"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <button class="nav-cta drawer-cta" onclick="window.location.href='products.html'">Order Now</button>
+    <div class="drawer-status"><span></span> ONLINE & READY</div>
+  </div>
+
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="glass-nav">
+    <div class="nav-container-inner">
+      <div class="nav-brand">
+        <a href="index.html" style="display:flex;align-items:center;gap:0.8rem;text-decoration:none;">
+          <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="logo-img"
+            onerror="this.style.display='none';document.querySelector('.logo-text').style.display='block'" />
+          <span class="logo-text">ALFA BIZ</span>
+        </a>
+      </div>
+      <ul class="nav-menu">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#why">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="nav-cta" onclick="window.location.href='products.html'">Order Now</button>
+        <button class="menu-btn" onclick="toggleDrawer()" aria-label="Open Menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ═══ HERO ═══ -->
+  <section id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <div class="hero-badge">SINCE 2010 · KARACHI'S TRUSTED TECH STORE // ALFA BIZ</div>
+      <h1 class="hero-title">
+        ELEVATE YOUR<br>
+        <span class="green">DIGITAL REALM</span><br>
+        WITH HIGH-END TECH
+      </h1>
+      <p class="hero-sub">Karachi's premium destination for elite gaming systems, flagship workhorses, and corporate hardware. Unparalleled performance awaits.</p>
+      <div class="hero-btns">
+        <button class="btn-g" onclick="window.location.href='products.html'">Explore Inventory</button>
+        <button class="btn-outline" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">Get Consultation</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ PRODUCTS ═══ -->
+  <section id="products">
+    <div class="section-wrap">
+      <div class="products-header reveal">
+        <div class="section-label">// System Catalog</div>
+        <h2 class="section-title">CHOOSE YOUR <span style="color:var(--green-bright);">ENGINE</span></h2>
+        <p class="section-sub">Meticulously engineered systems for raw power, elite gaming, and ultimate productivity.</p>
+      </div>
+
+      <div class="filter-bar reveal">
+        <button class="fbtn active" onclick="filterP(this,'all')">All</button>
+        <button class="fbtn" onclick="filterP(this,'gaming')">Gaming</button>
+        <button class="fbtn" onclick="filterP(this,'business')">Business</button>
+        <button class="fbtn" onclick="filterP(this,'creator')">Creators</button>
+        <button class="fbtn" onclick="filterP(this,'student')">Students</button>
+      </div>
+
+      <div class="products-grid" id="products-grid">
+
+        <!-- Row 1 -->
+        <div class="pcard reveal" data-cat="gaming" onclick="openProductModal('ROG Elite Pro X', 'RTX 4070 · 32GB DDR5 · 1TB NVMe · 165Hz', 'Rs. 320,000', 'assets/dell-bg.png', 'Rs. 380,000', 'gaming')">
+          <span class="pbadge b-hot">Hot</span>
+          <div class="pimg"><img src="assets/dell-bg.png" alt="ROG Elite Pro X" /></div>
+          <div class="stars">★★★★★</div>
+          <div class="pname">ROG Elite Pro X</div>
+          <div class="pfooter">
+            <div class="pprice"><span class="old">Rs. 380,000</span>Rs. 320,000</div>
+            <button class="btn-order" onclick="event.stopPropagation(); orderNow('ROG Elite Pro X', 'RTX 4070 · 32GB DDR5 · 1TB NVMe · 165Hz', 'Rs. 320,000')">
+              <i class="fab fa-whatsapp"></i> Order Now
+            </button>
+          </div>
+        </div>
+
+        <div class="pcard reveal" data-cat="business" style="transition-delay:0.1s" onclick="openProductModal('ThinkPad X1 Carbon', 'i7-13th Gen · 16GB RAM · 512GB SSD · 14-inch WUXGA', 'Rs. 185,000', 'assets/lenovo-bg.png', 'Rs. 220,000', 'business')">
+          <span class="pbadge b-new">New</span>
+          <div class="pimg"><img src="assets/lenovo-bg.png" alt="ThinkPad X1 Carbon" /></div>
+          <div class="stars">★★★★★</div>
+          <div class="pname">ThinkPad X1 Carbon</div>
+          <div class="pfooter">
+            <div class="pprice"><span class="old">Rs. 220,000</span>Rs. 185,000</div>
+            <button class="btn-order" onclick="event.stopPropagation(); orderNow('ThinkPad X1 Carbon', 'i7-13th Gen · 16GB RAM · 512GB SSD', 'Rs. 185,000')">
+              <i class="fab fa-whatsapp"></i> Order Now
+            </button>
+          </div>
+        </div>
+
+        <div class="pcard reveal" data-cat="student" style="transition-delay:0.2s" onclick="openProductModal('MacBook Air M3', 'Apple M3 Chip · 8GB Unified RAM · 256GB SSD · Liquid Retina', 'Rs. 245,000', 'assets/hp-bg.png', 'Rs. 280,000', 'student')">
+          <span class="pbadge b-sale">Sale</span>
+          <div class="pimg"><img src="assets/hp-bg.png" alt="MacBook Air M3" /></div>
+          <div class="stars">★★★★★</div>
+          <div class="pname">MacBook Air M3</div>
+          <div class="pfooter">
+            <div class="pprice"><span class="old">Rs. 280,000</span>Rs. 245,000</div>
+            <button class="btn-order" onclick="event.stopPropagation(); orderNow('MacBook Air M3', 'Apple M3 Chip · 8GB · 256GB SSD', 'Rs. 245,000')">
+              <i class="fab fa-whatsapp"></i> Order Now
+            </button>
+          </div>
+        </div>
+
+        <!-- Row 2 -->
+        <div class="pcard reveal" data-cat="gaming" style="transition-delay:0.1s" onclick="openProductModal('Razer Blade 16', 'RTX 4080 · 32GB DDR5 · 2TB NVMe SSD · 240Hz QHD+', 'Rs. 480,000', 'assets/lenovo-bg.png', '', 'gaming')">
+          <span class="pbadge b-hot">Hot</span>
+          <div class="pimg"><img src="assets/lenovo-bg.png" alt="Razer Blade 16" /></div>
+          <div class="stars">★★★★★</div>
+          <div class="pname">Razer Blade 16</div>
+          <div class="pfooter">
+            <div class="pprice">Rs. 480,000</div>
+            <button class="btn-order" onclick="event.stopPropagation(); orderNow('Razer Blade 16', 'RTX 4080 · 32GB · 2TB NVMe SSD', 'Rs. 480,000')">
+              <i class="fab fa-whatsapp"></i> Order Now
+            </button>
+          </div>
+        </div>
+
+        <div class="pcard reveal" data-cat="creator" style="transition-delay:0.2s" onclick="openProductModal('MacBook Pro 16 M3 Max', 'M3 Max Chip · 36GB RAM · 1TB SSD · Liquid Retina XDR Screen', 'Rs. 785,000', 'assets/dell-bg.png', 'Rs. 820,000', 'creator')">
+          <span class="pbadge b-sale">Sale</span>
+          <div class="pimg"><img src="assets/dell-bg.png" alt="MacBook Pro 16 M3 Max" /></div>
+          <div class="stars">★★★★★</div>
+          <div class="pname">MacBook Pro 16 M3 Max</div>
+          <div class="pfooter">
+            <div class="pprice"><span class="old">Rs. 820,000</span>Rs. 785,000</div>
+            <button class="btn-order" onclick="event.stopPropagation(); orderNow('MacBook Pro 16 M3 Max', 'M3 Max · 36GB RAM · 1TB SSD', 'Rs. 785,000')">
+              <i class="fab fa-whatsapp"></i> Order Now
+            </button>
+          </div>
+        </div>
+
+        <div class="pcard reveal" data-cat="gaming" style="transition-delay:0.3s" onclick="openProductModal('Alienware m18', 'i9-13980HX · RTX 4090 · 64GB DDR5 RAM · 2TB NVMe SSD', 'Rs. 950,000', 'assets/hp-bg.png', '', 'gaming')">
+          <span class="pbadge b-new">New</span>
+          <div class="pimg"><img src="assets/hp-bg.png" alt="Alienware m18" /></div>
+          <div class="stars">★★★★★</div>
+          <div class="pname">Alienware m18</div>
+          <div class="pfooter">
+            <div class="pprice">Rs. 950,000</div>
+            <button class="btn-order" onclick="event.stopPropagation(); orderNow('Alienware m18', 'i9-13980HX · RTX 4090 · 64GB DDR5 RAM', 'Rs. 950,000')">
+              <i class="fab fa-whatsapp"></i> Order Now
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="text-align:center; margin-top: 3rem;">
+        <a href="products.html" class="nav-cta reveal" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.8rem;font-size:0.8rem;padding:0.8rem 2.2rem;border-radius:10px;">
+          VIEW ALL MODELS <i class="fas fa-chevron-right" style="font-size:0.7rem;opacity:0.8;"></i>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ABOUT ═══ -->
+  <section id="about" class="reveal">
+    <div class="about-wrap">
+      <div>
+        <div class="about-label">// Who We Are</div>
+        <h2 class="about-title">YOUR ONE-STOP DESTINATION FOR <span>LAPTOPS & TECH ESSENTIALS</span></h2>
+        <p class="about-lead">Welcome to Alfa Biz your ultimate destination for premium computing solutions and high-quality tech components.</p>
+        <p class="about-desc">Whether you are looking for a powerful Laptop for heavy multitasking or a sleek, budget-friendly Chromebook for daily tasks, we have got you covered with top-tier brands at unbeatable prices.</p>
+        <p class="about-desc">We don’t just sell devices—we keep them running perfectly. Explore our comprehensive inventory of essential tech upgrades and accessories:</p>
+        <div class="about-pills" style="margin-bottom:1.5rem;">
+          <div class="about-pill"><i class="fas fa-plug"></i> Power Solutions</div>
+          <div class="about-pill"><i class="fas fa-memory"></i> RAM & Storage Upgrades</div>
+          <div class="about-pill"><i class="fas fa-display"></i> Display Replacements</div>
+        </div>
+        <p class="about-desc" style="margin-bottom:0;">We commit to delivering <strong style="color:#fff;">durability</strong>, <strong style="color:#fff;">competitive wholesale pricing</strong>, and <strong style="color:#fff;">exceptional customer service</strong>. Upgrade your tech setup with us today!</p>
+      </div>
+
+      <div class="about-right">
+        <div class="about-stat-grid">
+          <div class="about-stat">
+            <div class="about-stat-num">15+</div>
+            <div class="about-stat-label">Years of Trust</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">10K+</div>
+            <div class="about-stat-label">Happy Customers</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">500+</div>
+            <div class="about-stat-label">Products in Stock</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">2010</div>
+            <div class="about-stat-label">Est. in Karachi</div>
+          </div>
+        </div>
+        <div class="about-highlights">
+          <div class="about-hi">
+            <div class="about-hi-icon"><i class="fas fa-bolt"></i></div>
+            <div class="about-hi-text">
+              <h4>Power Solutions</h4>
+              <p>Premium quality chargers for all major Laptop and Chromebook models.</p>
+            </div>
+          </div>
+          <div class="about-hi">
+            <div class="about-hi-icon"><i class="fas fa-memory"></i></div>
+            <div class="about-hi-text">
+              <h4>Storage & Memory Upgrades</h4>
+              <p>High-performance RAMs, HDDs, and blazing-fast SSDs for both laptops and desktops.</p>
+            </div>
+          </div>
+          <div class="about-hi">
+            <div class="about-hi-icon"><i class="fas fa-display"></i></div>
+            <div class="about-hi-text">
+              <h4>Display Replacements</h4>
+              <p>Crystal-clear Laptop LED screens to restore your view.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FEATURES ═══ -->
+  <section id="features">
+    <div class="section-wrap" style="text-align:center; position:relative; z-index:2;">
+      <div class="section-label reveal">// Why We Are Different</div>
+      <h2 class="section-title reveal">SIX PILLARS OF <span style="color:var(--green-bright);">TRUST</span></h2>
+      <div class="features-grid">
+        <div class="fcard reveal">
+          <div class="fcard-inner">
+            <div class="ficon"><i class="fas fa-bolt"></i></div>
+            <div class="fword">Speed</div>
+            <div class="fdesc">Next-gen processors. NVMe SSDs. We test every unit before delivery. Zero compromises.</div>
+            <div class="pillar-glow-line"></div>
+          </div>
+        </div>
+        <div class="fcard reveal" style="transition-delay:0.1s">
+          <div class="fcard-inner">
+            <div class="ficon"><i class="fas fa-shield-halved"></i></div>
+            <div class="fword">Warranty</div>
+            <div class="fdesc">Full local warranty on every machine. Certified engineers. 7-day support, always.</div>
+            <div class="pillar-glow-line"></div>
+          </div>
+        </div>
+        <div class="fcard reveal" style="transition-delay:0.2s">
+          <div class="fcard-inner">
+            <div class="ficon"><i class="fas fa-truck-fast"></i></div>
+            <div class="fword">Delivery</div>
+            <div class="fdesc">Same-day Karachi delivery. Insured, tracked, and handled with care. Nationwide available.</div>
+            <div class="pillar-glow-line"></div>
+          </div>
+        </div>
+        <div class="fcard reveal" style="transition-delay:0.3s">
+          <div class="fcard-inner">
+            <div class="ficon"><i class="fas fa-check-double"></i></div>
+            <div class="fword">Authentic</div>
+            <div class="fdesc">100% genuine box-pack products. No grey market. Direct from official distributors.</div>
+            <div class="pillar-glow-line"></div>
+          </div>
+        </div>
+        <div class="fcard reveal" style="transition-delay:0.4s">
+          <div class="fcard-inner">
+            <div class="ficon"><i class="fas fa-headset"></i></div>
+            <div class="fword">Support</div>
+            <div class="fdesc">Expert technical assistance available 24/7. Our engineers are ready to help you anytime.</div>
+            <div class="pillar-glow-line"></div>
+          </div>
+        </div>
+        <div class="fcard reveal" style="transition-delay:0.5s">
+          <div class="fcard-inner">
+            <div class="ficon"><i class="fas fa-tags"></i></div>
+            <div class="fword">Value</div>
+            <div class="fdesc">Best price guarantee in Karachi. We match any official competitor's price.</div>
+            <div class="pillar-glow-line"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ WHY + CONTACT ═══ -->
+  <section id="why">
+    <div class="section-wrap">
+      <div class="why-grid">
+        <div>
+          <div class="section-label reveal">// Why Alfa Biz</div>
+          <h2 class="section-title reveal">THE DIFFERENCE</h2>
+          <ul style="list-style:none;">
+            <li class="why-item reveal">
+              <span class="why-num">01</span>
+              <div>
+                <div class="why-h4">Authentic Products</div>
+                <div class="why-p">No grey-market. Every laptop comes with official box, invoice, and full local warranty.</div>
+              </div>
+            </li>
+            <li class="why-item reveal">
+              <span class="why-num">02</span>
+              <div>
+                <div class="why-h4">Expert Tech Support</div>
+                <div class="why-p">Certified engineers across all brands. Help is one call away, 7 days a week.</div>
+              </div>
+            </li>
+            <li class="why-item reveal">
+              <span class="why-num">03</span>
+              <div>
+                <div class="why-h4">Best Price Guarantee</div>
+                <div class="why-p">We match any local competitor. Best prices in Karachi — always.</div>
+              </div>
+            </li>
+            <li class="why-item reveal">
+              <span class="why-num">04</span>
+              <div>
+                <div class="why-h4">15+ Years Trusted</div>
+                <div class="why-p">Established since 2010. Over 10,000 happy customers. Our reputation is our greatest asset.</div>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- CONTACT -->
+        <div class="contact-glass reveal">
+          <div class="cg-label">// Get In Touch</div>
+
+          <div class="cg-info-grid">
+            <div class="cg-info-item">
+              <div class="cg-info-icon"><i class="fas fa-location-dot"></i></div>
+              <div class="cg-info-text">
+                <div class="cg-info-label">Location</div>
+                <div class="cg-info-val">Karachi, PK</div>
+              </div>
+            </div>
+            <div class="cg-info-item">
+              <div class="cg-info-icon"><i class="fas fa-phone"></i></div>
+              <div class="cg-info-text">
+                <div class="cg-info-label">Phone</div>
+                <div class="cg-info-val"><a href="tel:+923212765705">0321-2765705</a></div>
+              </div>
+            </div>
+            <div class="cg-info-item">
+              <div class="cg-info-icon"><i class="fab fa-whatsapp"></i></div>
+              <div class="cg-info-text">
+                <div class="cg-info-label">WhatsApp</div>
+                <div class="cg-info-val"><a href="https://wa.me/923212765705" target="_blank">0321-2765705</a></div>
+              </div>
+            </div>
+            <div class="cg-info-item">
+              <div class="cg-info-icon"><i class="fas fa-clock"></i></div>
+              <div class="cg-info-text">
+                <div class="cg-info-label">Hours</div>
+                <div class="cg-info-val">10:00 – 22:00</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WhatsApp CTA Block -->
+          <div class="cg-wa-block">
+            <div class="cg-wa-title"><i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP</div>
+            <div class="cg-wa-desc">Fastest way to place an order or ask about any product. We reply within minutes!</div>
+            <a class="cg-wa-btn" href="https://wa.me/923212765705?text=Hello%2C%20I%20want%20to%20inquire%20about%20a%20laptop." target="_blank">
+              <i class="fab fa-whatsapp" style="font-size:1rem;"></i> Chat on WhatsApp
+            </a>
+          </div>
+
+          <div class="cg-divider"><span>OR LEAVE A MESSAGE</span></div>
+
+          <div class="cg-inputs">
+            <div class="cg-input-group">
+              <input class="cg-input" type="text" id="cgName" placeholder="Your Name" />
+              <input class="cg-input" type="tel" id="cgPhone" placeholder="Phone / WhatsApp" />
+            </div>
+            <input class="cg-input" type="email" id="cgEmail" placeholder="Email Address (Optional)" />
+            <textarea class="cg-input cg-textarea" id="cgMsg" placeholder="Your Message or Product Inquiry..."></textarea>
+            <button class="cg-send" onclick="sendContact()">SEND MESSAGE</button>
+          </div>
+
+          <div style="text-align:center;margin-top:1.2rem;">
+            <div style="display:inline-flex;align-items:center;gap:0.5rem;font-family:'Orbitron',monospace;font-size:0.65rem;color:var(--green);letter-spacing:2px;">
+              <span style="width:8px;height:8px;background:#39ff14;border-radius:50%;animation:pulse 2s infinite;"></span>
+              ONLINE & READY TO HELP · EST. 2010
+            </div>
+          </div>
+
+          <div class="cg-social-connect">
+            <div class="cg-social-label">FOLLOW US</div>
+            <div class="cg-socials">
+              <a class="cg-social" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+              <a class="cg-social" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+              <a class="cg-social" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+              <a class="cg-social" href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="footer-logo"
+          onerror="this.style.display='none';document.querySelector('.footer-logo-text').style.display='block'" />
+        <div class="footer-logo-text">ALFA BIZ</div>
+        <p class="footer-desc">Karachi's most trusted laptop store since 2010. Premium machines, genuine warranty, unbeatable prices. Powering Pakistan's tech future for 15+ years.</p>
+      </div>
+      <div>
+        <div class="footer-h">Navigate</div>
+        <ul class="footer-links">
+          <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="#about"><i class="fas fa-chevron-right"></i> About</a></li>
+          <li><a href="products.html"><i class="fas fa-chevron-right"></i> Products</a></li>
+          <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+          <li><a href="#why"><i class="fas fa-chevron-right"></i> Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <div class="footer-h">Find Us</div>
+        <div class="footer-addr">
+          Karachi, Sindh<br>
+          Pakistan<br><br>
+          Mon–Sun: 10am – 10pm<br>
+          <a href="tel:+923212765705" style="color:var(--green-bright);text-decoration:none;">0321-2765705</a><br>
+          <a href="https://wa.me/923212765705" target="_blank" style="color:#25D366;text-decoration:none;">WhatsApp: 0321-2765705</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Alfa Biz. Est. 2010. All rights reserved.</span>
+      <div class="socials">
+        <a class="soc" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a class="soc" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a class="soc" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a class="soc" href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a class="soc" href="https://wa.me/923212765705" target="_blank"><i class="fab fa-whatsapp"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp Float -->
+  <a class="wa-float" href="https://wa.me/923212765705?text=Hello,%20I%20want%20to%20inquire%20about%20a%20laptop." target="_blank" title="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+    </svg>
+  </a>
+
+
+  <!-- PRODUCT DETAIL MODAL -->
+  <div id="product-modal" class="modal-overlay" onclick="closeModal(event)">
+    <div class="modal-container">
+      <button class="modal-close" onclick="closeModal(event, true)">×</button>
+      <div class="modal-left">
+        <span class="modal-brand-badge">ALFA BIZ // PREMIUM</span>
+        <div class="modal-img-wrap">
+          <img id="modal-img" src="" alt="Product Image">
+        </div>
+        <div class="modal-price-tag" id="modal-price-left">Rs. 0</div>
+      </div>
+      <div class="modal-right">
+        <div class="modal-category" id="modal-badge-right">LAPTOP</div>
+        <h2 class="modal-title" id="modal-title">Product Name</h2>
+        <div class="modal-price" id="modal-price-right">Rs. 0</div>
+        
+        <div class="modal-divider"></div>
+        
+        <div class="modal-section-title">SYSTEM SPECIFICATIONS</div>
+        <ul class="modal-specs" id="modal-specs">
+          <!-- Dynamically populated -->
+        </ul>
+        
+        <p class="modal-description">
+          Experience next-generation performance and sleek build quality. This model is fully tested, verified, and comes with our store's premium durability warranty.
+        </p>
+        
+        <div class="modal-meta-grid">
+          <div class="meta-row">
+            <span class="meta-label">Availability:</span>
+            <span class="meta-val val-green"><span class="pulse-dot"></span> In Stock</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Delivery:</span>
+            <span class="meta-val">Free in Karachi (Nationwide Insured)</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Warranty:</span>
+            <span class="meta-val">Local Warranty Support</span>
+          </div>
+        </div>
+        
+        <div class="modal-actions">
+          <button class="modal-btn-order" id="modal-order-btn">
+            <i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP →
+          </button>
+          <button class="modal-btn-inquire" id="modal-inquire-btn">
+            INQUIRE DETAILS
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── PRELOADER ──
+    const preloader = document.getElementById('preloader');
+    const bar = document.getElementById('loader-bar-fill');
+    const pct = document.getElementById('loader-pct');
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 18 + 4;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+        }, 300);
+      }
+      bar.style.width = progress + '%';
+      pct.textContent = Math.floor(progress) + '%';
+    }, 80);
+
+    // ── DRAWER ──
+    function toggleDrawer() {
+      document.getElementById('drawer').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('open');
+    }
+
+    // ── FILTER ──
+    function filterP(btn, cat) {
+      document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      document.querySelectorAll('#products-grid .pcard').forEach(c => {
+        if (cat === 'all' || c.dataset.cat === cat) {
+          c.classList.remove('hidden');
+        } else {
+          c.classList.add('hidden');
+        }
+      });
+    }
+
+    // ── ORDER / CART ──
+    function orderNow(name, spec, price) {
+      const msg = encodeURIComponent(`Hello Alfa Biz! I want to order:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nPlease confirm availability.`);
+      window.open(`https://wa.me/923212765705?text=${msg}`, '_blank');
+    }
+
+    function addToCart(name, spec, price, img) {
+      const msg = encodeURIComponent(`Hello Alfa Biz! I'm interested in:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nIs this available?`);
+      window.open(`https://wa.me/923212765705?text=${msg}`, '_blank');
+    }
+
+    // ── CONTACT FORM ──
+    function sendContact() {
+      const name = document.getElementById('cgName').value.trim();
+      const phone = document.getElementById('cgPhone').value.trim();
+      const email = document.getElementById('cgEmail').value.trim();
+      const msg = document.getElementById('cgMsg').value.trim();
+      if (!name || !phone || !msg) {
+        alert('Please fill in your name, phone, and message.');
+        return;
+      }
+      const text = encodeURIComponent(`Hello Alfa Biz!\n\n👤 Name: ${name}\n📞 Phone: ${phone}${email ? '\n📧 Email: ' + email : ''}\n\n💬 Message:\n${msg}`);
+      window.open(`https://wa.me/923212765705?text=${text}`, '_blank');
+    }
+
+    // ── REVEAL ON SCROLL ──
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => observer.observe(r));
+
+    // ── PRODUCT DETAIL MODAL CONTROLS ──
+    function openProductModal(name, spec, price, img, oldPrice, category) {
+      document.getElementById('modal-img').src = img;
+      document.getElementById('modal-img').alt = name;
+      document.getElementById('modal-title').textContent = name;
+      document.getElementById('modal-price-left').textContent = price;
+      document.getElementById('modal-price-right').textContent = price;
+      
+      const badgeRight = document.getElementById('modal-badge-right');
+      badgeRight.textContent = (category || 'Laptop').toUpperCase();
+      
+      const specsUl = document.getElementById('modal-specs');
+      specsUl.innerHTML = '';
+      
+      if (spec) {
+        const specItems = spec.split(/·|\||\n/);
+        specItems.forEach(item => {
+          const trimmed = item.trim();
+          if (trimmed) {
+            const li = document.createElement('li');
+            li.textContent = trimmed;
+            specsUl.appendChild(li);
+          }
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = "High-performance tech specifications";
+        specsUl.appendChild(li);
+      }
+      
+      const orderBtn = document.getElementById('modal-order-btn');
+      orderBtn.onclick = function() {
+        orderNow(name, spec, price);
+      };
+      
+      const inquireBtn = document.getElementById('modal-inquire-btn');
+      inquireBtn.onclick = function() {
+        addToCart(name, spec, price, img);
+      };
+      
+      const modal = document.getElementById('product-modal');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal(event, forceClose = false) {
+      const modal = document.getElementById('product-modal');
+      if (forceClose || event.target === modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('product-modal');
+        if (modal && modal.classList.contains('open')) {
+          modal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  </script>
+</body>
+</html>
