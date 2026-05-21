@@ -520,23 +520,45 @@ body {
   flex-wrap: wrap;
 }
 
+.btn-primary,
 .btn-g {
   background: var(--green);
-  color: #000;
+  color: #07150f;
   border: none;
-  padding: 0.85rem 2.2rem;
+  padding: 0.95rem 2.2rem;
   font-family: 'Orbitron', monospace;
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 2px;
   cursor: pointer;
-  border-radius: 8px;
-  transition: all 0.3s;
+  border-radius: 12px;
+  transition: all 0.25s ease;
   text-transform: uppercase;
 }
 
+.btn-primary:hover,
 .btn-g:hover {
-  box-shadow: 0 0 30px rgba(0, 242, 254, 0.6);
+  box-shadow: 0 0 30px rgba(0, 210, 106, 0.4);
+  transform: translateY(-2px);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 1), rgba(218, 165, 32, 0.92));
+  color: #161204;
+  border: none;
+  padding: 0.95rem 2.2rem;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  text-transform: uppercase;
+}
+
+.btn-gold:hover {
+  box-shadow: 0 0 28px rgba(255, 215, 0, 0.35);
   transform: translateY(-2px);
 }
 
