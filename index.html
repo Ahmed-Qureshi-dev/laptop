@@ -398,7 +398,7 @@
       position: absolute;
       inset: 0;
       background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.08), transparent 32%),
-                  radial-gradient(circle at bottom right, rgba(0, 210, 106, 0.08), transparent 28%);
+                  radial-gradient(circle at bottom right, rgba(255, 215, 0, 0.05), transparent 28%);
       opacity: 0;
       transition: opacity 0.35s ease;
       pointer-events: none;
@@ -408,34 +408,35 @@
     .pcard:hover {
       transform: translateY(-10px);
       border-color: rgba(255, 215, 0, 0.28);
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32), 0 0 30px rgba(0, 210, 106, 0.12);
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32), 0 0 24px rgba(255, 215, 0, 0.16);
     }
     .pcard.hidden { display: none; }
 
     .pcard-img-wrap {
       position: relative;
       height: 240px;
-      background: linear-gradient(180deg, #f8f4eb 0%, #e9ddc6 100%);
+      background: transparent;
       display: flex;
       align-items: center;
       justify-content: center;
       overflow: hidden;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      border-bottom: none;
     }
     .pcard-img-wrap::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(circle at 50% 20%, rgba(255, 255, 255, 0.56), transparent 28%);
-      opacity: 0.34;
+      background: transparent;
+      opacity: 0;
       pointer-events: none;
     }
     .pcard-img-wrap img {
-      max-height: 205px;
-      max-width: 88%;
+      width: 100%;
+      max-width: 100%;
+      max-height: 220px;
       object-fit: contain;
       transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      filter: drop-shadow(0 14px 32px rgba(0, 0, 0, 0.25));
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.22));
     }
     .pcard:hover .pcard-img-wrap img {
       transform: scale(1.08) rotate(-1.5deg);
@@ -866,7 +867,7 @@
         <button class="btn-primary" onclick="window.location.href='products.html'">Explore Inventory</button>
         <button class="btn-gold" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">Get Consultation</button>
       </div>
-      <div class="stats-bar">
+      <!-- <div class="stats-bar">
         <div class="stat-item reveal">
           <div class="stat-num">15+</div>
           <div class="stat-label">Years Trust</div>
@@ -884,7 +885,7 @@
           <div class="stat-label">Support</div>
         </div>
       </div>
-    </div>
+    </div> -->
   </section>
 
   <!-- ═══ PRODUCTS ═══ -->
