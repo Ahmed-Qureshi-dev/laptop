@@ -1,170 +1,147 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Using global products and WA_NUMBER from products_data.js
+const WA_NUMBER = '923212765705';
 
-    window.orderNow = function(name, spec, price) {
-      const msg = `Hello Alfa Biz! I want to ORDER NOW:
+// ── REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.08 });
+reveals.forEach(r => observer.observe(r));
 
-Product: ${name}
-Specs: ${spec}
-Price: ${price}
+// ── DRAWER ──
+function toggleDrawer() {
+  document.getElementById('drawer').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
 
-Please confirm and share payment details.`;
-      window.open('https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg), '_blank');
-    };
+// ── RENDER PRODUCTS ──
+function renderProducts(list) {
+  const grid = document.getElementById('productsGrid');
+  if (!grid) return;
 
-    window.toggleDrawer = function() {
-      document.getElementById('drawer').classList.toggle('active');
-      document.getElementById('overlay').classList.toggle('active');
-    };
+  if (!list || list.length === 0) {
+    grid.innerHTML = `
+      <div class="no-results">
+        <i class="fas fa-laptop"></i>
+        No products found. Try a different search.
+      </div>`;
+    return;
+  }
 
-    window.openProductModalById = function(id) {
-      const p = products.find(prod => prod.id === id);
-      if (!p) return;
-      window.openProductModal(p.name, p.spec, p.price, p.img, p.old, p.cat);
-    };
+  grid.innerHTML = list.map((p, idx) => {
+    let badgeHtml = '';
+    if (p.badge) {
+      const lc = p.badge.toLowerCase();
+      const bc = lc === 'hot' ? 'b-hot' : lc === 'sale' ? 'b-sale' : 'b-new';
+      badgeHtml = `<span class="sbadge ${bc}">${p.badge}</span>`;
+    }
 
-    window.renderProducts = function(data) {
-      const grid = document.getElementById('productsGrid');
-      grid.innerHTML = data.map(p => `
-        <div class="pcard reveal" onclick="openProductModalById(${p.id})">
-          ${p.badge ? `<span class="pbadge ${p.badge === 'Hot' ? 'b-hot' : 'b-new'}">${p.badge}</span>` : ''}
-          <div class="pimg"><img src="${p.img}" alt="${p.name}"></div>
-          <h3 class="pname">${p.name}</h3>
-          <div class="pcard-footer">
-            <div class="price-wrap">
-              ${p.old ? `<span class="old-price">${p.old}</span>` : ''}
-              <div class="pprice">${p.price}</div>
+    const specArr = p.spec
+      ? p.spec.split(/·|•|\||\n/).map(s => s.trim()).filter(Boolean).slice(0, 3)
+      : [];
+    const specTags = specArr.map(s => `<span class="scard-spec-tag">${s}</span>`).join('');
+    const oldPrice = p.old ? `<span class="scard-old">${p.old}</span>` : '';
+
+    return `
+      <div class="scard" style="animation-delay:${(idx % 8) * 0.06}s" onclick="openProductModal('${escStr(p.name)}','${escStr(p.spec||'')}','${escStr(p.price)}','${escStr(p.img||'')}','${escStr(p.old||'')}','${escStr(p.cat||'')}')">
+        <div class="scard-top-accent"></div>
+        ${badgeHtml}
+        <div class="scard-img">
+          <img src="${p.img || ''}" alt="${p.name}" onerror="this.style.opacity='0.3'" />
+        </div>
+        <div class="scard-body">
+          <div class="scard-cat">${p.cat || 'laptop'}</div>
+          <div class="scard-name">${p.name}</div>
+          <div class="scard-specs">${specTags}</div>
+          <div class="scard-divider"></div>
+          <div class="scard-footer">
+            <div class="scard-price-wrap">
+              ${oldPrice}
+              <span class="scard-price">${p.price}</span>
             </div>
-            <button class="pcard-btn-order" onclick="event.stopPropagation(); orderNow('${p.name.replace(/'/g, "\\'")}', '${p.spec.replace(/'/g, "\\'")}', '${p.price}')">
-              <i class="fab fa-whatsapp"></i> Order Now
+            <button class="scard-btn" onclick="event.stopPropagation(); orderNow('${escStr(p.name)}','${escStr(p.spec||'')}','${escStr(p.price)}')">
+              <i class="fab fa-whatsapp"></i> Order
             </button>
           </div>
         </div>
-      `).join('');
-      initReveal(); // Trigger reveal check for new items
-    };
+      </div>`;
+  }).join('');
+}
 
-    window.filterProducts = function() {
-      const search = document.getElementById('searchInput').value.toLowerCase();
-      const cat = document.getElementById('catFilter').value;
-      const brand = document.getElementById('brandFilter').value;
-      const filtered = products.filter(p => {
-        return (p.name.toLowerCase().includes(search) || p.spec.toLowerCase().includes(search)) && (cat === 'all' || p.cat === cat) && (brand === 'all' || p.brand === brand);
-      });
-      renderProducts(filtered);
-    };
+function escStr(s) {
+  return String(s).replace(/'/g, "\\'").replace(/\n/g, ' ');
+}
 
-    // LENIS SMOOTH SCROLL
-    const lScript = document.createElement('script');
-    lScript.src = "https://unpkg.com/@studio-freight/lenis@1.0.33/dist/lenis.min.js";
-    lScript.onload = () => {
-      const lenis = new Lenis({ duration: 1.2, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-      function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-      requestAnimationFrame(raf);
-    };
-    document.head.appendChild(lScript);
+// ── FILTER ──
+function filterProducts() {
+  const search = (document.getElementById('searchInput')?.value || '').toLowerCase();
+  const cat = document.getElementById('catFilter')?.value || 'all';
+  const brand = document.getElementById('brandFilter')?.value || 'all';
 
-    renderProducts(products);
+  const filtered = (typeof products !== 'undefined' ? products : []).filter(p => {
+    const matchSearch = !search || p.name.toLowerCase().includes(search) || (p.spec && p.spec.toLowerCase().includes(search));
+    const matchCat = cat === 'all' || p.cat === cat;
+    const matchBrand = brand === 'all' || p.name.toLowerCase().includes(brand);
+    return matchSearch && matchCat && matchBrand;
+  });
 
-    // REVEAL LOGIC
-    function initReveal() {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    }
-    initReveal();
+  renderProducts(filtered);
+}
 
-    // PRELOADER REMOVAL
-    window.addEventListener('load', () => {
-      const preloader = document.getElementById('preloader');
-      if (preloader) {
-        setTimeout(() => {
-          preloader.classList.add('loaded');
-          initReveal(); // Re-trigger reveal after preloader is gone
-        }, 2800);
-      }
-    });
+// ── ORDER ──
+function orderNow(name, spec, price) {
+  const msg = encodeURIComponent(`Hello Alfa Biz! I want to order:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nPlease confirm availability.`);
+  window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+}
 
-    // Floating capsule navbar scroll effect
-    const navbar = document.querySelector('nav');
-    if (navbar) {
-      const handleScroll = () => {
-        if (window.scrollY > 40) {
-          navbar.classList.add('scrolled');
-        } else {
-          navbar.classList.remove('scrolled');
-        }
-      };
-      window.addEventListener('scroll', handleScroll);
-      handleScroll();
-    }
+// ── MODAL ──
+function openProductModal(name, spec, price, img, oldPrice, category) {
+  document.getElementById('modal-img').src = img;
+  document.getElementById('modal-img').alt = name;
+  document.getElementById('modal-title').textContent = name;
+  document.getElementById('modal-price-left').textContent = price;
+  document.getElementById('modal-price-right').textContent = price;
+  document.getElementById('modal-badge-right').textContent = (category || 'Laptop').toUpperCase();
 
-    // ── PRODUCT DETAIL MODAL CONTROLS ──
-    window.openProductModal = function(name, spec, price, img, oldPrice, category) {
-      document.getElementById('modal-img').src = img;
-      document.getElementById('modal-img').alt = name;
-      document.getElementById('modal-title').textContent = name;
-      document.getElementById('modal-price-left').textContent = price;
-      document.getElementById('modal-price-right').textContent = price;
-      
-      const badgeRight = document.getElementById('modal-badge-right');
-      badgeRight.textContent = (category || 'Laptop').toUpperCase();
-      
-      const specsUl = document.getElementById('modal-specs');
-      specsUl.innerHTML = '';
-      
-      if (spec) {
-        const specItems = spec.split(/·|•|\||\n/);
-        specItems.forEach(item => {
-          const trimmed = item.trim();
-          if (trimmed) {
-            const li = document.createElement('li');
-            li.textContent = trimmed;
-            specsUl.appendChild(li);
-          }
-        });
-      } else {
+  const specsUl = document.getElementById('modal-specs');
+  specsUl.innerHTML = '';
+  if (spec) {
+    spec.split(/·|•|\||\n/).forEach(item => {
+      const trimmed = item.trim();
+      if (trimmed) {
         const li = document.createElement('li');
-        li.textContent = "High-performance tech specifications";
+        li.textContent = trimmed;
         specsUl.appendChild(li);
       }
-      
-      const orderBtn = document.getElementById('modal-order-btn');
-      orderBtn.onclick = function() {
-        window.orderNow(name, spec, price);
-      };
-      
-      const inquireBtn = document.getElementById('modal-inquire-btn');
-      inquireBtn.onclick = function() {
-        const msg = encodeURIComponent(`Hello Alfa Biz! I'm interested in inquiring about:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nIs this available?`);
-        window.open('https://wa.me/' + WA_NUMBER + '?text=' + msg, '_blank');
-      };
-      
-      const modal = document.getElementById('product-modal');
-      modal.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    };
-
-    window.closeModal = function(event, forceClose = false) {
-      const modal = document.getElementById('product-modal');
-      if (forceClose || event.target === modal) {
-        modal.classList.remove('open');
-        document.body.style.overflow = '';
-      }
-    };
-
-    window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') {
-        const modal = document.getElementById('product-modal');
-        if (modal && modal.classList.contains('open')) {
-          modal.classList.remove('open');
-          document.body.style.overflow = '';
-        }
-      }
     });
+  }
+
+  document.getElementById('modal-order-btn').onclick = () => orderNow(name, spec, price);
+  document.getElementById('modal-inquire-btn').onclick = () => {
+    const msg = encodeURIComponent(`Hello Alfa Biz! I'm interested in:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nIs this available?`);
+    window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+  };
+
+  const modal = document.getElementById('product-modal');
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal(event, force = false) {
+  const modal = document.getElementById('product-modal');
+  if (force || event.target === modal) {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+}
+
+window.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    const m = document.getElementById('product-modal');
+    if (m?.classList.contains('open')) { m.classList.remove('open'); document.body.style.overflow = ''; }
+  }
 });
+
+// ── INIT ──
+if (typeof products !== 'undefined') {
+  renderProducts(products);
+}

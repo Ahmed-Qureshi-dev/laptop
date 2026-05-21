@@ -1,70 +1,813 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Products - Alfa Biz | Karachi's Trusted Store</title>
-  <link rel="icon" type="image/png" href="assets/logo-removebg-preview.png">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
+  <title>Products - Alfa Biz | Green & Gold Edition</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="products_styles.css">
+  <style>
+    :root {
+      --green: #00d26a;
+      --green-light: #4ade80;
+      --green-glow: rgba(0, 210, 106, 0.4);
+      --green-dark: #059669;
+      --gold: #ffd700;
+      --gold-light: #ffe066;
+      --gold-dark: #d4af37;
+      --gold-glow: rgba(255, 215, 0, 0.35);
+      --bg: #030806;
+      --bg-elevated: rgba(3, 8, 6, 0.7);
+      --glass-bg: rgba(0, 210, 106, 0.05);
+      --glass-border: rgba(0, 210, 106, 0.15);
+      --glass-gold: rgba(255, 215, 0, 0.08);
+      --glass-gold-border: rgba(255, 215, 0, 0.2);
+      --card-bg: rgba(5, 15, 10, 0.6);
+      --text: #e8f5e9;
+      --text-muted: #8ba892;
+      --text-gold: #ffd700;
+      --white: #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', 'Rajdhani', sans-serif;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* ═══ ANIMATED BACKGROUND MESH ═══ */
+    .bg-mesh {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background: 
+        radial-gradient(ellipse 80% 50% at 20% 40%, rgba(0, 210, 106, 0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 80% 60%, rgba(255, 215, 0, 0.06) 0%, transparent 50%),
+        radial-gradient(ellipse 50% 30% at 50% 100%, rgba(0, 210, 106, 0.05) 0%, transparent 50%);
+    }
+    .bg-mesh::before {
+      content: ''; position: absolute; inset: 0;
+      background-image: 
+        linear-gradient(rgba(0, 210, 106, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 210, 106, 0.03) 1px, transparent 1px);
+      background-size: 80px 80px;
+    }
+
+    /* ═══ FLOATING ORBS ═══ */
+    .orb {
+      position: fixed; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0;
+      animation: orbFloat 20s ease-in-out infinite;
+    }
+    .orb-1 { width: 400px; height: 400px; background: rgba(0, 210, 106, 0.12); top: -10%; left: -5%; animation-delay: 0s; }
+    .orb-2 { width: 300px; height: 300px; background: rgba(255, 215, 0, 0.1); top: 40%; right: -5%; animation-delay: -7s; }
+    .orb-3 { width: 250px; height: 250px; background: rgba(0, 210, 106, 0.08); bottom: 10%; left: 30%; animation-delay: -14s; }
+    @keyframes orbFloat {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33% { transform: translate(30px, -30px) scale(1.1); }
+      66% { transform: translate(-20px, 20px) scale(0.95); }
+    }
+
+    /* ═══ PRELOADER ═══ */
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      background: #020503;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+    #preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+    .loader-ring-wrap {
+      position: relative; width: 160px; height: 160px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .loader-ring {
+      position: absolute; border-radius: 50%; border: 3px solid transparent;
+    }
+    .loader-ring-1 { width: 160px; height: 160px; border-top-color: var(--green); animation: spin 2s linear infinite; }
+    .loader-ring-2 { width: 120px; height: 120px; border-right-color: var(--gold); animation: spin 1.5s linear infinite reverse; }
+    .loader-ring-3 { width: 80px; height: 80px; border-bottom-color: var(--green-light); animation: spin 3s linear infinite; }
+    .loader-logo {
+      width: 50px; height: 50px; object-fit: contain; position: relative; z-index: 2;
+      filter: drop-shadow(0 0 20px var(--green-glow));
+    }
+    .loader-status {
+      font-family: 'Orbitron', monospace; font-size: 0.75rem;
+      letter-spacing: 6px; color: var(--green); margin: 2rem 0 1.5rem;
+      animation: blink 1.5s ease infinite;
+    }
+    .loader-bar-track {
+      width: 280px; height: 4px; background: rgba(0, 210, 106, 0.1);
+      border-radius: 4px; overflow: hidden; position: relative;
+    }
+    .loader-bar {
+      height: 100%; width: 0; background: linear-gradient(90deg, var(--green), var(--gold));
+      box-shadow: 0 0 20px var(--green-glow); transition: width 0.05s linear;
+    }
+    .loader-pct {
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      color: var(--gold); margin-top: 0.8rem; letter-spacing: 3px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ═══ GLASS NAVBAR ═══ */
+    .glass-nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(3, 8, 6, 0.7);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--glass-border);
+      padding: 0 2rem;
+      transition: all 0.3s ease;
+    }
+    .glass-nav.scrolled {
+      background: rgba(3, 8, 6, 0.9);
+      border-bottom-color: var(--gold);
+      box-shadow: 0 4px 30px rgba(0, 210, 106, 0.1);
+    }
+    .nav-inner {
+      max-width: 1400px; margin: 0 auto;
+      height: 75px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 0.8rem;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-weight: 900; font-size: 1.1rem;
+      color: var(--white); box-shadow: 0 0 20px var(--green-glow);
+    }
+    .logo-text {
+      font-family: 'Orbitron', monospace; font-size: 1.1rem;
+      font-weight: 900; letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--green-light), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .nav-menu { list-style: none; display: flex; gap: 2.5rem; }
+    .nav-menu a {
+      text-decoration: none; color: var(--text-muted);
+      font-family: 'Rajdhani', sans-serif; font-weight: 600;
+      font-size: 0.9rem; letter-spacing: 2px;
+      transition: all 0.3s; text-transform: uppercase;
+      position: relative; padding: 0.3rem 0;
+    }
+    .nav-menu a::after {
+      content: ''; position: absolute; bottom: 0; left: 0;
+      width: 0; height: 2px; background: linear-gradient(90deg, var(--green), var(--gold));
+      transition: width 0.3s ease;
+    }
+    .nav-menu a:hover, .nav-menu a.active {
+      color: var(--green-light);
+    }
+    .nav-menu a:hover::after, .nav-menu a.active::after {
+      width: 100%;
+    }
+    .nav-actions { display: flex; align-items: center; gap: 1rem; }
+    .nav-cta {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: var(--white); border: none;
+      padding: 0.7rem 1.8rem;
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      font-weight: 700; letter-spacing: 2px; cursor: pointer;
+      border-radius: 10px; transition: all 0.3s;
+      text-transform: uppercase;
+      box-shadow: 0 4px 15px rgba(0, 210, 106, 0.3);
+      position: relative; overflow: hidden;
+    }
+    .nav-cta::before {
+      content: ''; position: absolute; top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: left 0.5s;
+    }
+    .nav-cta:hover::before { left: 100%; }
+    .nav-cta:hover {
+      box-shadow: 0 0 30px var(--green-glow), 0 0 60px rgba(255, 215, 0, 0.2);
+      transform: translateY(-2px);
+    }
+    .menu-btn {
+      display: none; flex-direction: column; gap: 5px;
+      background: none; border: none; cursor: pointer; padding: 8px;
+    }
+    .menu-btn span {
+      display: block; width: 26px; height: 2.5px;
+      background: linear-gradient(90deg, var(--green), var(--gold));
+      border-radius: 2px; transition: all 0.3s;
+    }
+
+    /* ═══ DRAWER ═══ */
+    .drawer-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6); backdrop-filter: blur(8px);
+      z-index: 1100;
+    }
+    .drawer-overlay.open { display: block; }
+    .drawer {
+      position: fixed; top: 0; right: -350px; width: 320px;
+      height: 100vh;
+      background: rgba(3, 8, 6, 0.95);
+      backdrop-filter: blur(30px);
+      border-left: 1px solid var(--glass-border);
+      z-index: 1200; padding: 2.5rem 2rem;
+      transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; gap: 2rem;
+    }
+    .drawer.open { right: 0; }
+    .drawer-close {
+      position: absolute; top: 1.2rem; right: 1.2rem;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      color: var(--green); font-size: 1.5rem; cursor: pointer;
+      width: 40px; height: 40px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s;
+    }
+    .drawer-close:hover {
+      background: var(--green-glow); border-color: var(--green);
+      color: var(--white);
+    }
+    .drawer-logo { height: 55px; width: auto; filter: drop-shadow(0 0 15px var(--green-glow)); }
+    .drawer-links { list-style: none; margin-top: 1rem; }
+    .drawer-links li { border-bottom: 1px solid var(--glass-border); }
+    .drawer-links a {
+      display: block; padding: 1rem 0;
+      color: var(--text); text-decoration: none;
+      font-family: 'Rajdhani', sans-serif; font-weight: 600;
+      font-size: 1.05rem; letter-spacing: 2px; text-transform: uppercase;
+      transition: all 0.3s;
+    }
+    .drawer-links a:hover {
+      color: var(--gold); padding-left: 10px;
+    }
+    .drawer-socials { display: flex; gap: 1rem; margin-top: auto; }
+    .drawer-soc {
+      width: 42px; height: 42px;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 10px; display: flex; align-items: center;
+      justify-content: center; color: var(--text-muted);
+      text-decoration: none; transition: all 0.3s; font-size: 1.1rem;
+    }
+    .drawer-soc:hover {
+      color: var(--gold); border-color: var(--gold);
+      background: var(--glass-gold); box-shadow: 0 0 15px var(--gold-glow);
+    }
+    .drawer-status {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      color: var(--green); letter-spacing: 2px;
+      padding: 0.8rem; background: var(--glass-bg);
+      border: 1px solid var(--glass-border); border-radius: 10px;
+    }
+    .drawer-status span {
+      width: 8px; height: 8px; background: var(--green);
+      border-radius: 50%; animation: pulse 2s infinite;
+      box-shadow: 0 0 10px var(--green-glow);
+    }
+
+    /* ═══ PAGE HEADER ═══ */
+    .page-header {
+      padding: 140px 2rem 3rem; text-align: center; position: relative; z-index: 2;
+    }
+    .page-header .section-label {
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      letter-spacing: 5px; color: var(--gold);
+      margin-bottom: 1rem; display: inline-block;
+      padding: 0.4rem 1.2rem; background: var(--glass-gold);
+      border: 1px solid var(--glass-gold-border); border-radius: 50px;
+    }
+    .page-header h1 {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 900; color: var(--white); margin-bottom: 1rem;
+    }
+    .page-header h1 span {
+      background: linear-gradient(135deg, var(--green-light), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .page-header p {
+      color: var(--text-muted); font-size: 1.1rem;
+      max-width: 600px; margin: 0 auto; line-height: 1.7;
+    }
+
+    /* ═══ FILTER BAR ═══ */
+    .filter-bar {
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+      justify-content: center; margin-bottom: 3rem;
+      position: relative; z-index: 2;
+    }
+    .fbtn {
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      color: var(--text-muted); padding: 0.6rem 1.8rem;
+      font-family: 'Orbitron', monospace; font-size: 0.7rem;
+      letter-spacing: 2px; cursor: pointer; border-radius: 50px;
+      transition: all 0.3s; text-transform: uppercase;
+      backdrop-filter: blur(10px);
+    }
+    .fbtn:hover {
+      background: rgba(0, 210, 106, 0.1);
+      color: var(--green-light); border-color: var(--green);
+      box-shadow: 0 0 20px rgba(0, 210, 106, 0.15);
+    }
+    .fbtn.active {
+      background: linear-gradient(135deg, rgba(0, 210, 106, 0.2), rgba(255, 215, 0, 0.15));
+      color: var(--gold); border-color: var(--gold);
+      box-shadow: 0 0 25px var(--gold-glow);
+    }
+
+    /* ═══ PRODUCTS GRID - NEW GLASS CARD STYLE ═══ */
+    .products-section {
+      padding: 0 2rem 6rem; position: relative; z-index: 2;
+    }
+    .section-wrap { max-width: 1400px; margin: 0 auto; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+    }
+    .pcard {
+      background: var(--card-bg);
+      backdrop-filter: blur(20px) saturate(150%);
+      -webkit-backdrop-filter: blur(20px) saturate(150%);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 0;
+      position: relative; overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      cursor: pointer;
+    }
+    .pcard::before {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(0, 210, 106, 0.05), rgba(255, 215, 0, 0.03));
+      opacity: 0; transition: opacity 0.4s;
+      pointer-events: none; z-index: 1;
+    }
+    .pcard:hover::before { opacity: 1; }
+    .pcard:hover {
+      transform: translateY(-8px) scale(1.02);
+      border-color: var(--gold);
+      box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 40px rgba(0, 210, 106, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    }
+    .pcard.hidden { display: none; }
+
+    /* Card Image Area */
+    .pcard-img-wrap {
+      position: relative; height: 240px;
+      background: linear-gradient(135deg, rgba(0, 210, 106, 0.05), rgba(255, 215, 0, 0.03));
+      display: flex; align-items: center; justify-content: center;
+      overflow: hidden; border-bottom: 1px solid var(--glass-border);
+    }
+    .pcard-img-wrap img {
+      max-height: 200px; max-width: 85%;
+      object-fit: contain;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.5));
+    }
+    .pcard:hover .pcard-img-wrap img {
+      transform: scale(1.08) rotate(-2deg);
+    }
+    .pcard-img-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(3, 8, 6, 0.8) 100%);
+      pointer-events: none;
+    }
+
+    /* Badges */
+    .pbadge {
+      position: absolute; top: 1rem; right: 1rem;
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      letter-spacing: 2px; padding: 0.4rem 1rem;
+      border-radius: 50px; font-weight: 700; z-index: 3;
+      backdrop-filter: blur(10px);
+    }
+    .b-hot {
+      background: linear-gradient(135deg, rgba(255, 50, 50, 0.2), rgba(255, 80, 80, 0.1));
+      color: #ff6b6b; border: 1px solid rgba(255, 80, 80, 0.3);
+      box-shadow: 0 4px 15px rgba(255, 50, 50, 0.2);
+    }
+    .b-new {
+      background: linear-gradient(135deg, rgba(0, 210, 106, 0.2), rgba(0, 210, 106, 0.05));
+      color: var(--green-light); border: 1px solid var(--glass-border);
+      box-shadow: 0 4px 15px rgba(0, 210, 106, 0.15);
+    }
+    .b-sale {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.05));
+      color: var(--gold); border: 1px solid var(--glass-gold-border);
+      box-shadow: 0 4px 15px var(--gold-glow);
+    }
+
+    /* Card Content */
+    .pcard-content { padding: 1.5rem 1.8rem 1.8rem; position: relative; z-index: 2; }
+    .pcard-category {
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      letter-spacing: 3px; color: var(--green-light);
+      text-transform: uppercase; margin-bottom: 0.5rem;
+    }
+    .pname {
+      font-family: 'Orbitron', monospace; font-size: 1rem;
+      font-weight: 700; color: var(--white); margin-bottom: 0.6rem;
+      letter-spacing: 1px; line-height: 1.3;
+    }
+    .pspec {
+      font-size: 0.82rem; color: var(--text-muted);
+      line-height: 1.6; margin-bottom: 1.2rem;
+      display: -webkit-box; -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .pcard-footer {
+      display: flex; justify-content: space-between; align-items: center;
+      padding-top: 1rem;
+      border-top: 1px solid var(--glass-border);
+    }
+    .pprice-wrap { display: flex; flex-direction: column; }
+    .pprice {
+      font-family: 'Orbitron', monospace; font-size: 1.1rem;
+      color: var(--gold); font-weight: 700;
+      text-shadow: 0 0 10px var(--gold-glow);
+    }
+    .pprice .old {
+      font-size: 0.78rem; color: var(--text-muted);
+      text-decoration: line-through; margin-bottom: 2px;
+    }
+    .btn-order {
+      padding: 0.65rem 1.2rem;
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      letter-spacing: 1.5px; border-radius: 10px; cursor: pointer;
+      transition: all 0.3s; border: none; font-weight: 700;
+      display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      color: var(--white);
+      box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+    }
+    .btn-order:hover {
+      background: linear-gradient(135deg, #128C7E, #25D366);
+      box-shadow: 0 0 25px rgba(37, 211, 102, 0.5);
+      transform: scale(1.05);
+    }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      border-top: 1px solid var(--glass-border);
+      background: rgba(2, 5, 3, 0.95);
+      padding: 5rem 2rem 0; position: relative; z-index: 2;
+    }
+    .footer-inner {
+      max-width: 1400px; margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr;
+      gap: 4rem; padding-bottom: 4rem;
+    }
+    .footer-brand {
+      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
+    }
+    .footer-logo-icon {
+      width: 45px; height: 45px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-weight: 900;
+      color: var(--white); font-size: 1.2rem;
+      box-shadow: 0 0 20px var(--green-glow);
+    }
+    .footer-logo-text {
+      font-family: 'Orbitron', monospace; font-size: 1.3rem;
+      font-weight: 900; letter-spacing: 3px;
+      background: linear-gradient(135deg, var(--green-light), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; }
+    .footer-h {
+      font-family: 'Orbitron', monospace; font-size: 0.75rem;
+      letter-spacing: 3px; color: var(--gold); margin-bottom: 1.5rem;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .footer-links a {
+      color: var(--text-muted); text-decoration: none; font-size: 0.95rem;
+      transition: all 0.3s; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .footer-links a:hover { color: var(--green-light); padding-left: 5px; }
+    .footer-links a i { font-size: 0.7rem; color: var(--gold); }
+    .footer-addr { color: var(--text-muted); font-size: 0.95rem; line-height: 2; }
+    .footer-bottom {
+      max-width: 1400px; margin: 0 auto;
+      border-top: 1px solid var(--glass-border); padding: 2rem 0;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+    }
+    .footer-copy { font-size: 0.9rem; color: var(--text-muted); letter-spacing: 1px; }
+    .socials { display: flex; gap: 0.8rem; }
+    .soc {
+      width: 42px; height: 42px;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      border-radius: 10px; display: flex; align-items: center;
+      justify-content: center; color: var(--text-muted);
+      text-decoration: none; transition: all 0.3s;
+    }
+    .soc:hover {
+      color: var(--gold); border-color: var(--gold);
+      background: var(--glass-gold); box-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    /* WhatsApp Float */
+    .wa-float {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 900;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: linear-gradient(135deg, #25D366, #128C7E);
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+      box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
+      transition: all 0.3s; border: 2px solid rgba(255,255,255,0.1);
+    }
+    .wa-float:hover {
+      transform: scale(1.15) rotate(5deg);
+      box-shadow: 0 8px 35px rgba(37, 211, 102, 0.6);
+    }
+    .wa-float svg { width: 30px; height: 30px; fill: #fff; }
+
+    /* Reveal animation */
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ═══ PRODUCT DETAIL MODAL - GLASS EDITION ═══ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 2500;
+      background: rgba(2, 5, 3, 0.85);
+      backdrop-filter: blur(20px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; visibility: hidden;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+      padding: 1rem;
+    }
+    .modal-overlay.open { opacity: 1; visibility: visible; }
+    .modal-container {
+      background: rgba(5, 15, 10, 0.95);
+      backdrop-filter: blur(40px) saturate(180%);
+      border: 1px solid var(--glass-border);
+      border-radius: 28px;
+      width: 100%; max-width: 950px;
+      min-height: 550px;
+      display: grid; grid-template-columns: 1fr 1.3fr;
+      position: relative; overflow: hidden;
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8), 0 0 50px rgba(0, 210, 106, 0.1);
+      transform: translateY(40px) scale(0.95);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-overlay.open .modal-container {
+      transform: translateY(0) scale(1);
+    }
+    .modal-close {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      background: var(--glass-bg); border: 1px solid var(--glass-border);
+      color: var(--green-light); font-size: 1.5rem; cursor: pointer;
+      width: 44px; height: 44px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.3s; z-index: 10;
+    }
+    .modal-close:hover {
+      background: var(--green-glow); border-color: var(--green);
+      color: var(--white); box-shadow: 0 0 20px var(--green-glow);
+    }
+    .modal-left {
+      background: linear-gradient(135deg, rgba(0, 210, 106, 0.03), rgba(255, 215, 0, 0.02));
+      border-right: 1px solid var(--glass-border);
+      padding: 3rem;
+      display: flex; flex-direction: column;
+      justify-content: space-between; align-items: center;
+      position: relative;
+    }
+    .modal-brand-badge {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem; color: var(--gold);
+      letter-spacing: 3px; align-self: flex-start;
+      border: 1px solid var(--glass-gold-border);
+      padding: 0.4rem 1rem; border-radius: 50px;
+      background: var(--glass-gold);
+    }
+    .modal-img-wrap {
+      width: 100%; height: 280px;
+      display: flex; align-items: center; justify-content: center;
+      margin: 2rem 0;
+    }
+    .modal-img-wrap img {
+      max-width: 100%; max-height: 260px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
+      transition: transform 0.5s ease;
+    }
+    .modal-img-wrap:hover img { transform: scale(1.05); }
+    .modal-price-tag {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.2rem; font-weight: 700;
+      color: var(--bg); background: linear-gradient(135deg, var(--green-light), var(--gold));
+      padding: 0.6rem 1.8rem; border-radius: 12px;
+      box-shadow: 0 0 30px rgba(0, 210, 106, 0.3);
+      letter-spacing: 1px;
+    }
+    .modal-right {
+      padding: 3rem;
+      display: flex; flex-direction: column;
+      overflow-y: auto; max-height: 90vh;
+    }
+    .modal-category {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem; color: var(--text-muted);
+      letter-spacing: 3px; text-transform: uppercase;
+      margin-bottom: 0.5rem;
+    }
+    .modal-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.8rem; font-weight: 900;
+      color: var(--white); line-height: 1.3;
+      margin-bottom: 0.5rem;
+    }
+    .modal-price {
+      font-family: 'Orbitron', monospace;
+      font-size: 1.6rem; font-weight: 700;
+      background: linear-gradient(135deg, var(--green-light), var(--gold));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text; margin-bottom: 1.5rem;
+    }
+    .modal-divider {
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
+      margin-bottom: 1.5rem;
+    }
+    .modal-section-title {
+      font-family: 'Orbitron', monospace;
+      font-size: 0.7rem; color: var(--gold);
+      letter-spacing: 2px; margin-bottom: 1rem;
+    }
+    .modal-specs {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 0.6rem; margin-bottom: 1.5rem; padding: 0;
+    }
+    .modal-specs li {
+      font-size: 0.92rem; color: var(--text);
+      display: flex; align-items: center; gap: 0.8rem;
+      padding: 0.4rem 0;
+    }
+    .modal-specs li::before {
+      content: '⚡'; color: var(--green-light); font-size: 0.9rem;
+      filter: drop-shadow(0 0 5px var(--green-glow));
+    }
+    .modal-description {
+      font-size: 0.95rem; color: var(--text-muted);
+      line-height: 1.7; margin-bottom: 1.5rem;
+    }
+    .modal-meta-grid {
+      display: flex; flex-direction: column; gap: 0.8rem;
+      background: rgba(0, 0, 0, 0.3);
+      border: 1px solid var(--glass-border);
+      padding: 1.2rem; border-radius: 14px; margin-bottom: 2rem;
+    }
+    .meta-row {
+      display: flex; justify-content: space-between; font-size: 0.9rem;
+    }
+    .meta-label { color: var(--text-muted); }
+    .meta-val { color: var(--white); font-weight: 600; }
+    .meta-val.val-green {
+      color: var(--green-light); display: flex; align-items: center; gap: 0.5rem;
+    }
+    .pulse-dot {
+      width: 8px; height: 8px; background: var(--green);
+      border-radius: 50%; display: inline-block;
+      box-shadow: 0 0 10px var(--green-glow);
+      animation: pulse-ring 1.5s infinite;
+    }
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 106, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 210, 106, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 210, 106, 0); }
+    }
+    .modal-actions {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem;
+    }
+    .modal-btn-order {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      color: var(--white); border: none;
+      padding: 1rem 1.5rem; font-family: 'Orbitron', monospace;
+      font-size: 0.8rem; font-weight: 900; letter-spacing: 2px;
+      border-radius: 12px; cursor: pointer; transition: all 0.3s;
+      display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+      box-shadow: 0 4px 20px rgba(0, 210, 106, 0.3);
+    }
+    .modal-btn-order:hover {
+      box-shadow: 0 0 30px var(--green-glow);
+      transform: translateY(-2px);
+    }
+    .modal-btn-inquire {
+      background: transparent; color: var(--gold);
+      border: 1.5px solid var(--glass-gold-border);
+      padding: 1rem 1.5rem; font-family: 'Orbitron', monospace;
+      font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
+      border-radius: 12px; cursor: pointer; transition: all 0.3s;
+    }
+    .modal-btn-inquire:hover {
+      background: var(--glass-gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 20px var(--gold-glow);
+    }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 1024px) {
+      .products-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .nav-menu { display: none; }
+      .menu-btn { display: flex; }
+      .products-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 3rem; }
+      .page-header { padding-top: 120px; }
+
+      .modal-container {
+        grid-template-columns: 1fr;
+        max-height: 85vh; overflow-y: auto;
+      }
+      .modal-left {
+        border-right: none;
+        border-bottom: 1px solid var(--glass-border);
+        padding: 2rem;
+      }
+      .modal-img-wrap { height: 200px; margin: 1.5rem 0; }
+      .modal-img-wrap img { max-height: 180px; }
+      .modal-right { padding: 2rem; max-height: none; }
+      .modal-actions { grid-template-columns: 1fr; gap: 1rem; }
+    }
+  </style>
+<base target="_blank">
 </head>
 
 <body>
+  <!-- Background Effects -->
+  <div class="bg-mesh"></div>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
 
+  <!-- ═══ PRELOADER ═══ -->
+  <div id="preloader">
+    <div class="loader-ring-wrap">
+      <div class="loader-ring loader-ring-1"></div>
+      <div class="loader-ring loader-ring-2"></div>
+      <div class="loader-ring loader-ring-3"></div>
+      <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="loader-logo" onerror="this.style.display='none'">
+    </div>
+    <div class="loader-status">LOADING INVENTORY</div>
+    <div class="loader-bar-track">
+      <div class="loader-bar" id="loader-bar-fill"></div>
+    </div>
+    <div class="loader-pct" id="loader-pct">0%</div>
+  </div>
 
-  <!-- DRAWER -->
+  <!-- ═══ DRAWER ═══ -->
   <div class="drawer-overlay" id="overlay" onclick="toggleDrawer()"></div>
   <div class="drawer" id="drawer">
     <button class="drawer-close" onclick="toggleDrawer()">×</button>
-    <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="drawer-logo" />
+    <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="drawer-logo" onerror="this.style.display='none'" />
     <ul class="drawer-links">
-      <li><a href="index.html">HOME</a></li>
-      <li><a href="#" style="color:var(--green-bright);">PRODUCTS</a></li>
-      <li><a href="index.html#features">FEATURES</a></li>
-      <li><a href="index.html#why">CONTACT</a></li>
+      <li><a href="index.html" onclick="toggleDrawer()">Home</a></li>
+      <li><a href="index.html#about" onclick="toggleDrawer()">About</a></li>
+      <li><a href="products.html" onclick="toggleDrawer()">Products</a></li>
+      <li><a href="index.html#features" onclick="toggleDrawer()">Features</a></li>
+      <li><a href="index.html#why" onclick="toggleDrawer()">Contact</a></li>
     </ul>
-
-    <!-- Mobile Socials -->
     <div class="drawer-socials">
       <a class="drawer-soc" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
       <a class="drawer-soc" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
       <a class="drawer-soc" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
       <a class="drawer-soc" href="https://wa.me/923212765705" target="_blank"><i class="fab fa-whatsapp"></i></a>
     </div>
-
-    <!-- Mobile CTA -->
-    <button class="nav-cta drawer-cta" onclick="window.location.href='products.html'">Order Now</button>
-
-    <div class="drawer-status" style="margin-top:2rem; font-family:'Rajdhani'; font-size:0.9rem; display:flex; align-items:center; gap:0.5rem;">
-      <span style="width:8px; height:8px; background:var(--green-bright); border-radius:50%; box-shadow:0 0 10px var(--green);"></span> ONLINE & READY
-    </div>
+    <div class="drawer-status"><span></span> ONLINE & READY</div>
   </div>
 
-
-  <!-- NAV -->
-  <nav class="glass-nav">
-    <div class="nav-container-inner">
-      <div class="nav-brand">
-        <a href="index.html" style="display:flex; align-items:center; gap:0.8rem; text-decoration:none;">
-          <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="logo-img"
-            onerror="this.style.display='none';document.querySelector('.logo-text').style.display='block'" />
-          <span class="logo-text">ALFA BIZ</span>
-        </a>
-      </div>
-      
+  <!-- ═══ NAVBAR ═══ -->
+  <nav class="glass-nav" id="navbar">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-brand">
+        <div class="logo-icon">A</div>
+        <span class="logo-text">ALFA BIZ</span>
+      </a>
       <ul class="nav-menu">
         <li><a href="index.html">Home</a></li>
+        <li><a href="index.html#about">About</a></li>
         <li><a href="products.html" class="active">Products</a></li>
         <li><a href="index.html#features">Features</a></li>
         <li><a href="index.html#why">Contact</a></li>
       </ul>
-      
       <div class="nav-actions">
-        <button class="nav-cta" onclick="window.location.href='index.html#why'">Order Now</button>
+        <button class="nav-cta" onclick="document.getElementById('products-grid').scrollIntoView({behavior:'smooth'})">Order Now</button>
         <button class="menu-btn" onclick="toggleDrawer()" aria-label="Open Menu">
           <span></span><span></span><span></span>
         </button>
@@ -72,92 +815,75 @@
     </div>
   </nav>
 
-
-
-  <!-- HERO -->
-  <header class="shop-hero reveal">
-    <div class="hero-scanline"></div>
-    <!-- HUD Corners -->
-    <div class="hud-corner tl"></div>
-    <div class="hud-corner tr"></div>
-    <div class="hud-corner bl"></div>
-    <div class="hud-corner br"></div>
-
-    <div class="hero-badge">OFFICIAL STORE // BOX PACK</div>
-    <h1 class="shop-title">ALL <span class="green">MODELS</span></h1>
-    <p class="shop-sub">Explore our extensive catalog of high-performance laptops. Genuine warranty, unbeatable prices.</p>
-  </header>
-
-  <!-- CONTROLS -->
-  <div class="shop-controls reveal">
-    <div class="search-wrap">
-      <i class="fas fa-search"></i>
-      <input type="text" class="shop-search" id="searchInput" placeholder="Search laptops..." onkeyup="filterProducts()">
-    </div>
-    <div class="filter-wrap">
-      <select class="shop-filter" id="catFilter" onchange="filterProducts()">
-        <option value="all">Categories</option>
-        <option value="gaming">Gaming</option>
-        <option value="business">Business</option>
-        <option value="creator">Creator</option>
-      </select>
-      <select class="shop-filter" id="brandFilter" onchange="filterProducts()">
-        <option value="all">All Brands</option>
-        <option value="dell">Dell</option>
-        <option value="hp">HP</option>
-        <option value="lenovo">Lenovo</option>
-        <option value="apple">Apple</option>
-      </select>
-    </div>
+  <!-- ═══ PAGE HEADER ═══ -->
+  <div class="page-header">
+    <div class="section-label">// Full Catalog</div>
+    <h1>EXPLORE OUR <span>COLLECTION</span></h1>
+    <p>Browse our complete inventory of premium laptops, gaming rigs, business workstations, and student essentials. All tested, certified, and ready to ship.</p>
   </div>
 
-  <!-- GRID -->
-  <div class="shop-grid" id="productsGrid"></div>
+  <!-- ═══ PRODUCTS ═══ -->
+  <section class="products-section">
+    <div class="section-wrap">
+      <div class="filter-bar reveal">
+        <button class="fbtn active" onclick="filterP(this,'all')">All Products</button>
+        <button class="fbtn" onclick="filterP(this,'gaming')">Gaming</button>
+        <button class="fbtn" onclick="filterP(this,'business')">Business</button>
+        <button class="fbtn" onclick="filterP(this,'creator')">Creators</button>
+        <button class="fbtn" onclick="filterP(this,'student')">Students</button>
+      </div>
 
-  <!-- FOOTER -->
+      <div class="products-grid" id="products-grid">
+        <!-- Dynamically populated from products_data.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
   <footer>
     <div class="footer-inner">
       <div>
-        <img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="footer-logo"
-          onerror="this.style.display='none';document.querySelector('.footer-logo-text').style.display='block'" />
-        <div class="footer-logo-text">ALFA BIZ</div>
-        <p class="footer-desc">Karachi's most trusted laptop store. Premium machines, genuine warranty, unbeatable prices. Powering Pakistan's tech future since 2017.</p>
+        <div class="footer-brand">
+          <div class="footer-logo-icon">A</div>
+          <span class="footer-logo-text">ALFA BIZ</span>
+        </div>
+        <p class="footer-desc">Karachi's most trusted laptop store since 2010. Premium machines, genuine warranty, unbeatable prices. Powering Pakistan's tech future for 15+ years with our green & gold standard of excellence.</p>
       </div>
       <div>
         <div class="footer-h">Navigate</div>
         <ul class="footer-links">
           <li><a href="index.html"><i class="fas fa-chevron-right"></i> Home</a></li>
+          <li><a href="index.html#about"><i class="fas fa-chevron-right"></i> About</a></li>
           <li><a href="products.html"><i class="fas fa-chevron-right"></i> Products</a></li>
           <li><a href="index.html#features"><i class="fas fa-chevron-right"></i> Features</a></li>
-          <li><a href="index.html#why"><i class="fas fa-chevron-right"></i> Why Us</a></li>
           <li><a href="index.html#why"><i class="fas fa-chevron-right"></i> Contact</a></li>
         </ul>
       </div>
       <div>
         <div class="footer-h">Find Us</div>
         <div class="footer-addr">
-          Shop #__, Your Area,<br>
           Karachi, Sindh<br>
           Pakistan<br><br>
           Mon–Sun: 10am – 10pm<br>
-          <a href="tel:+923212765705" style="color:var(--green-bright);text-decoration:none;">0321-2765705</a>
+          <a href="tel:+923212765705" style="color:var(--green-light);text-decoration:none;">0321-2765705</a><br>
+          <a href="https://wa.me/923212765705" target="_blank" style="color:#25D366;text-decoration:none;">WhatsApp: 0321-2765705</a>
         </div>
       </div>
     </div>
     <div class="footer-bottom">
-      <span class="footer-copy">© 2026 Alfa Biz. All rights reserved.</span>
+      <span class="footer-copy">© 2026 Alfa Biz. Est. 2010. All rights reserved.</span>
       <div class="socials">
-        <a class="soc" href="https://instagram.com/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-        <a class="soc" href="https://facebook.com/" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-        <a class="soc" href="https://tiktok.com/" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-        <a class="soc" href="https://youtube.com/" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-        <a class="soc" href="https://wa.me/923212765705" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a class="soc" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a class="soc" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+        <a class="soc" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a class="soc" href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a class="soc" href="https://wa.me/923212765705" target="_blank"><i class="fab fa-whatsapp"></i></a>
       </div>
     </div>
   </footer>
 
-  <!-- WHATSAPP FLOAT -->
-  <a class="wa-float" href="https://wa.me/923212765705?text=Hello, I want to inquire about a laptop." target="_blank" title="Chat on WhatsApp">
+  <!-- WhatsApp Float -->
+  <a class="wa-float" href="https://wa.me/923212765705?text=Hello,%20I%20want%20to%20inquire%20about%20a%20laptop." target="_blank" title="Chat on WhatsApp">
     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
       <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
     </svg>
@@ -178,18 +904,12 @@
         <div class="modal-category" id="modal-badge-right">LAPTOP</div>
         <h2 class="modal-title" id="modal-title">Product Name</h2>
         <div class="modal-price" id="modal-price-right">Rs. 0</div>
-        
         <div class="modal-divider"></div>
-        
         <div class="modal-section-title">SYSTEM SPECIFICATIONS</div>
-        <ul class="modal-specs" id="modal-specs">
-          <!-- Dynamically populated -->
-        </ul>
-        
+        <ul class="modal-specs" id="modal-specs"></ul>
         <p class="modal-description">
-          Experience next-generation performance and sleek build quality. This model is fully tested, verified, and comes with our store's premium durability warranty.
+          Experience next-generation performance and sleek build quality. This model is fully tested, verified, and comes with our store's premium durability warranty backed by 15+ years of trust.
         </p>
-        
         <div class="modal-meta-grid">
           <div class="meta-row">
             <span class="meta-label">Availability:</span>
@@ -204,7 +924,6 @@
             <span class="meta-val">Local Warranty Support</span>
           </div>
         </div>
-        
         <div class="modal-actions">
           <button class="modal-btn-order" id="modal-order-btn">
             <i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP →
@@ -218,6 +937,189 @@
   </div>
 
   <script src="products_data.js"></script>
-  <script src="products_script.js"></script>
+  <script>
+    // ── PRELOADER ──
+    const preloader = document.getElementById('preloader');
+    const bar = document.getElementById('loader-bar-fill');
+    const pct = document.getElementById('loader-pct');
+    let progress = 0;
+    const interval = setInterval(() => {
+      progress += Math.random() * 15 + 5;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+        setTimeout(() => { preloader.classList.add('hidden'); }, 400);
+      }
+      bar.style.width = progress + '%';
+      pct.textContent = Math.floor(progress) + '%';
+    }, 100);
+
+    // ── NAVBAR SCROLL EFFECT ──
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // ── DRAWER ──
+    function toggleDrawer() {
+      document.getElementById('drawer').classList.toggle('open');
+      document.getElementById('overlay').classList.toggle('open');
+    }
+
+    // ── RENDER ALL PRODUCTS ──
+    function renderProducts(cat = 'all') {
+      const grid = document.getElementById('products-grid');
+      if (!grid) return;
+      let filtered = products;
+      if (cat !== 'all') {
+        filtered = products.filter(p => p.cat === cat);
+      }
+      grid.innerHTML = filtered.map((p, idx) => {
+        let badgeHtml = '';
+        if (p.badge) {
+          let badgeClass = 'b-new';
+          const lowerBadge = p.badge.toLowerCase();
+          if (lowerBadge === 'hot') badgeClass = 'b-hot';
+          else if (lowerBadge === 'sale') badgeClass = 'b-sale';
+          badgeHtml = `<span class="pbadge ${badgeClass}">${p.badge}</span>`;
+        }
+        const oldPriceHtml = p.old ? `<span class="old">${p.old}</span>` : '';
+        return `
+          <div class="pcard reveal" data-cat="${p.cat}" style="transition-delay:${(idx % 6) * 0.08}s" onclick="openProductModalById(${p.id})">
+            <div class="pcard-img-wrap">
+              ${badgeHtml}
+              <img src="${p.img}" alt="${p.name}" loading="lazy" />
+              <div class="pcard-img-overlay"></div>
+            </div>
+            <div class="pcard-content">
+              <div class="pcard-category">${p.cat.toUpperCase()}</div>
+              <div class="pname">${p.name}</div>
+              <div class="pspec">${p.spec}</div>
+              <div class="pcard-footer">
+                <div class="pprice-wrap">
+                  <div class="pprice">${oldPriceHtml}${p.price}</div>
+                </div>
+                <button class="btn-order" onclick="event.stopPropagation(); orderNowById(${p.id})">
+                  <i class="fab fa-whatsapp"></i> Order
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+      if (typeof observer !== 'undefined') {
+        document.querySelectorAll('#products-grid .reveal').forEach(r => observer.observe(r));
+      }
+    }
+
+    function openProductModalById(id) {
+      const p = products.find(prod => prod.id === id);
+      if (!p) return;
+      openProductModal(p.name, p.spec, p.price, p.img, p.old, p.cat);
+    }
+    function orderNowById(id) {
+      const p = products.find(prod => prod.id === id);
+      if (!p) return;
+      orderNow(p.name, p.spec, p.price);
+    }
+
+    // ── FILTER ──
+    function filterP(btn, cat) {
+      document.querySelectorAll('.fbtn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      renderProducts(cat);
+    }
+
+    // ── ORDER / CART ──
+    function orderNow(name, spec, price) {
+      const msg = encodeURIComponent(`Hello Alfa Biz! I want to order:
+
+📦 *${name}*
+🔧 ${spec}
+💰 ${price}
+
+Please confirm availability.`);
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    }
+    function addToCart(name, spec, price, img) {
+      const msg = encodeURIComponent(`Hello Alfa Biz! I'm interested in:
+
+📦 *${name}*
+🔧 ${spec}
+💰 ${price}
+
+Is this available?`);
+      window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
+    }
+
+    // ── REVEAL ON SCROLL ──
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Render all products
+    renderProducts('all');
+    
+    // Observe reveals after products are rendered
+    const reveals = document.querySelectorAll('.reveal');
+    reveals.forEach(r => observer.observe(r));
+
+    // ── PRODUCT DETAIL MODAL ──
+    function openProductModal(name, spec, price, img, oldPrice, category) {
+      document.getElementById('modal-img').src = img;
+      document.getElementById('modal-img').alt = name;
+      document.getElementById('modal-title').textContent = name;
+      document.getElementById('modal-price-left').textContent = price;
+      document.getElementById('modal-price-right').textContent = price;
+      document.getElementById('modal-badge-right').textContent = (category || 'Laptop').toUpperCase();
+      const specsUl = document.getElementById('modal-specs');
+      specsUl.innerHTML = '';
+      if (spec) {
+        const specItems = spec.split(/·|•|\||\n/);
+        specItems.forEach(item => {
+          const trimmed = item.trim();
+          if (trimmed) {
+            const li = document.createElement('li');
+            li.textContent = trimmed;
+            specsUl.appendChild(li);
+          }
+        });
+      } else {
+        const li = document.createElement('li');
+        li.textContent = "High-performance tech specifications";
+        specsUl.appendChild(li);
+      }
+      document.getElementById('modal-order-btn').onclick = function() { orderNow(name, spec, price); };
+      document.getElementById('modal-inquire-btn').onclick = function() { addToCart(name, spec, price, img); };
+      const modal = document.getElementById('product-modal');
+      modal.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeModal(event, forceClose = false) {
+      const modal = document.getElementById('product-modal');
+      if (forceClose || event.target === modal) {
+        modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+    }
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const modal = document.getElementById('product-modal');
+        if (modal && modal.classList.contains('open')) {
+          modal.classList.remove('open');
+          document.body.style.overflow = '';
+        }
+      }
+    });
+  </script>
 </body>
 </html>
