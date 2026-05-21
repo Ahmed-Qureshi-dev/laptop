@@ -1,5 +1,4 @@
-< !DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Alfa Biz - Karachi's #1 Tech & Laptop Store</title>
- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"><style> :root {
+:root {
   --green: #00f2fe;
   --green-bright: #00f2fe;
   --green-neon: #39ff14;
@@ -811,20 +810,20 @@ body {
 }
 
 .pcard {
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
+  background: rgba(6, 9, 7, 0.96);
+  border: 1px solid rgba(255, 215, 0, 0.16);
+  border-radius: 26px;
   padding: 1.5rem;
   position: relative;
   overflow: hidden;
-  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+  transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
   cursor: pointer;
 }
 
 .pcard:hover {
-  transform: translateY(-5px);
-  border-color: var(--green);
-  box-shadow: 0 10px 25px rgba(0, 242, 254, 0.15);
+  transform: translateY(-10px);
+  border-color: rgba(255, 215, 0, 0.3);
+  box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28), 0 0 18px rgba(255, 215, 0, 0.08);
 }
 
 .pcard.hidden {
@@ -836,63 +835,74 @@ body {
   top: 1rem;
   right: 1rem;
   font-family: 'Orbitron', monospace;
-  font-size: 0.6rem;
-  letter-spacing: 2px;
-  padding: 0.25rem 0.7rem;
-  border-radius: 4px;
-  font-weight: 700;
+  font-size: 0.65rem;
+  letter-spacing: 1.6px;
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  font-weight: 800;
+  background: rgba(28, 24, 18, 0.95);
+  border: 1px solid rgba(255, 215, 0, 0.22);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
 }
 
 .b-hot {
-  background: rgba(255, 50, 50, 0.15);
-  color: #ff5555;
-  border: 1px solid rgba(255, 80, 80, 0.3);
+  background: linear-gradient(135deg, rgba(255, 80, 80, 0.18), rgba(255, 180, 0, 0.1));
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 80, 80, 0.28);
 }
 
 .b-new {
-  background: rgba(0, 242, 254, 0.1);
-  color: var(--green);
-  border: 1px solid var(--border);
+  background: linear-gradient(135deg, rgba(0, 210, 106, 0.18), rgba(255, 215, 0, 0.08));
+  color: var(--green-light);
+  border: 1px solid rgba(0, 210, 106, 0.28);
 }
 
 .b-sale {
-  background: rgba(255, 180, 0, 0.12);
-  color: #ffb400;
-  border: 1px solid rgba(255, 180, 0, 0.3);
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 215, 0, 0.08));
+  color: var(--gold);
+  border: 1px solid rgba(255, 215, 0, 0.28);
 }
 
 .pimg {
-  height: 160px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1rem;
-  border-radius: 10px;
-  background: rgba(0, 0, 0, 0.3);
+  margin-bottom: 1.25rem;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #f7f0df 0%, #e8dac0 100%);
   overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .pimg img {
-  max-height: 140px;
+  max-height: 160px;
   max-width: 100%;
   object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.pimg:hover img {
+  transform: scale(1.03);
 }
 
 .stars {
   display: flex;
-  gap: 2px;
-  margin-bottom: 0.5rem;
-  color: #ffb400;
-  font-size: 0.8rem;
+  gap: 4px;
+  margin-bottom: 0.6rem;
+  color: #ffbf00;
+  font-size: 0.85rem;
 }
 
 .pname {
   font-family: 'Orbitron', monospace;
-  font-size: 0.85rem;
-  font-weight: 700;
+  font-size: 1rem;
+  font-weight: 800;
   color: #fff;
-  margin-bottom: 0.4rem;
-  letter-spacing: 1px;
+  margin-bottom: 0.35rem;
+  letter-spacing: 0.8px;
+  line-height: 1.2;
 }
 
 .pspec {
@@ -903,45 +913,48 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-top: 1.4rem;
+  gap: 1rem;
 }
 
 .pprice {
   font-family: 'Orbitron', monospace;
-  font-size: 1rem;
-  color: var(--green);
-  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--gold);
+  font-weight: 800;
+  text-shadow: 0 0 14px rgba(255, 215, 0, 0.16);
 }
 
 .pprice .old {
   font-size: 0.72rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.65);
   text-decoration: line-through;
   display: block;
-  margin-bottom: 1px;
+  margin-bottom: 0.2rem;
 }
 
 .btn-order {
-  padding: 0.55rem 0.9rem;
+  padding: 0.7rem 1.1rem;
   font-family: 'Orbitron', monospace;
-  font-size: 0.65rem;
-  letter-spacing: 1px;
-  border-radius: 7px;
+  font-size: 0.72rem;
+  letter-spacing: 1.5px;
+  border-radius: 15px;
   cursor: pointer;
-  transition: all 0.3s;
-  border: none;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 215, 0, 0.35);
   font-weight: 700;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  background: #25D366;
-  color: #fff;
+  gap: 0.35rem;
+  background: rgba(255, 215, 0, 0.08);
+  color: var(--gold);
 }
 
 .btn-order:hover {
-  background: #1da851;
-  box-shadow: 0 0 15px rgba(37, 211, 102, 0.4);
+  background: rgba(255, 215, 0, 0.14);
+  box-shadow: 0 0 16px rgba(255, 215, 0, 0.2);
+  transform: translateY(-1px);
 }
 
 /* HOT BANNER */
@@ -1921,304 +1934,4 @@ footer {
   }
 }
 
-</style></head><body>< !-- ═══ PRELOADER ═══ --><div id="preloader"><div class="hud-corner tl"></div><div class="hud-corner tr"></div><div class="hud-corner bl"></div><div class="hud-corner br"></div><div class="loader-content"><div class="loader-orbital-wrap"><div class="loader-ring loader-ring-1"></div><div class="loader-ring loader-ring-2"></div><div class="loader-ring loader-ring-3"></div><img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="loader-logo"
-onerror="this.style.display='none'"></div><div class="loader-status">INITIALIZING SYSTEMS</div><div class="loader-bar-wrap"><div class="loader-bar-label"><span>BOOT SEQUENCE</span><span id="loader-pct">0%</span></div><div class="loader-bar-track"><div class="loader-bar" id="loader-bar-fill"></div></div></div></div></div>< !-- ═══ DRAWER ═══ --><div class="drawer-overlay" id="overlay" onclick="toggleDrawer()"></div><div class="drawer" id="drawer"><button class="drawer-close" onclick="toggleDrawer()">×</button><img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="drawer-logo"
-onerror="this.style.display='none'" /><ul class="drawer-links"><li><a href="index.html" onclick="toggleDrawer()">Home</a></li><li><a href="#about" onclick="toggleDrawer()">About</a></li><li><a href="products.html">Products</a></li><li><a href="#features" onclick="toggleDrawer()">Features</a></li><li><a href="#why" onclick="toggleDrawer()">Contact</a></li></ul><div class="drawer-socials"><a class="drawer-soc" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a><a class="drawer-soc" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a><a class="drawer-soc" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a><a class="drawer-soc" href="https://wa.me/923212765705" target="_blank"><i class="fab fa-whatsapp"></i></a></div><button class="nav-cta drawer-cta" onclick="window.location.href='products.html'">Order Now</button><div class="drawer-status"><span></span>ONLINE & READY</div></div>< !-- ═══ NAVBAR ═══ --><nav class="glass-nav"><div class="nav-container-inner"><div class="nav-brand"><a href="index.html" style="display:flex;align-items:center;gap:0.8rem;text-decoration:none;"><img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="logo-img"
-onerror="this.style.display='none';document.querySelector('.logo-text').style.display='block'" /><span class="logo-text">ALFA BIZ</span></a></div><ul class="nav-menu"><li><a href="index.html" class="active">Home</a></li><li><a href="#about">About</a></li><li><a href="products.html">Products</a></li><li><a href="#features">Features</a></li><li><a href="#why">Contact</a></li></ul><div class="nav-actions"><button class="nav-cta" onclick="window.location.href='products.html'">Order Now</button><button class="menu-btn" onclick="toggleDrawer()" aria-label="Open Menu"><span></span><span></span><span></span></button></div></div></nav>< !-- ═══ HERO ═══ --><section id="hero"><div class="hero-bg"></div><div class="hero-content"><div class="hero-badge">SINCE 2010 · KARACHI'S TRUSTED TECH STORE // ALFA BIZ</div>
- <h1 class="hero-title">ELEVATE YOUR<br><span class="green">DIGITAL REALM</span><br>WITH HIGH-END TECH </h1><p class="hero-sub">Karachi's premium destination for elite gaming systems, flagship workhorses, and corporate hardware. Unparalleled performance awaits.</p>
- <div class="hero-btns"><button class="btn-g" onclick="window.location.href='products.html'">Explore Inventory</button><button class="btn-outline" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">Get Consultation</button></div></div></section>< !-- ═══ PRODUCTS ═══ --><section id="products"><div class="section-wrap"><div class="products-header reveal"><div class="section-label"> // System Catalog</div>
-<h2 class="section-title">CHOOSE YOUR <span style="color:var(--green-bright);">ENGINE</span></h2><p class="section-sub">Meticulously engineered systems for raw power,
-elite gaming,
-and ultimate productivity.</p></div><div class="filter-bar reveal"><button class="fbtn active" onclick="filterP(this,'all')">All</button><button class="fbtn" onclick="filterP(this,'gaming')">Gaming</button><button class="fbtn" onclick="filterP(this,'business')">Business</button><button class="fbtn" onclick="filterP(this,'creator')">Creators</button><button class="fbtn" onclick="filterP(this,'student')">Students</button></div><div class="products-grid" id="products-grid">< !-- Dynamically populated from products_data.js --></div><div style="text-align:center; margin-top: 3rem;"><a href="products.html" class="nav-cta reveal" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.8rem;font-size:0.8rem;padding:0.8rem 2.2rem;border-radius:10px;">VIEW ALL MODELS <i class="fas fa-chevron-right" style="font-size:0.7rem;opacity:0.8;"></i></a></div></div></section>< !-- ═══ ABOUT ═══ --><section id="about" class="reveal"><div class="about-wrap"><div><div class="about-label"> // Who We Are</div>
-<h2 class="about-title">YOUR ONE-STOP DESTINATION FOR <span>LAPTOPS & TECH ESSENTIALS</span></h2><p class="about-lead">Welcome to Alfa Biz your ultimate destination for premium computing solutions and high-quality tech components.</p><p class="about-desc">Whether you are looking for a powerful Laptop for heavy multitasking or a sleek,
-budget-friendly Chromebook for daily tasks,
-we have got you covered with top-tier brands at unbeatable prices.</p><p class="about-desc">We don’t just sell devices—we keep them running perfectly. Explore our comprehensive inventory of essential tech upgrades and accessories:</p><div class="about-pills" style="margin-bottom:1.5rem;"><div class="about-pill"><i class="fas fa-plug"></i>Power Solutions</div><div class="about-pill"><i class="fas fa-memory"></i>RAM & Storage Upgrades</div><div class="about-pill"><i class="fas fa-display"></i>Display Replacements</div></div><p class="about-desc" style="margin-bottom:0;">We commit to delivering <strong style="color:#fff;">durability</strong>,
-<strong style="color:#fff;">competitive wholesale pricing</strong>,
-and <strong style="color:#fff;">exceptional customer service</strong>. Upgrade your tech setup with us today !</p></div><div class="about-right"><div class="about-stat-grid"><div class="about-stat"><div class="about-stat-num">15+</div><div class="about-stat-label">Years of Trust</div></div><div class="about-stat"><div class="about-stat-num">10K+</div><div class="about-stat-label">Happy Customers</div></div><div class="about-stat"><div class="about-stat-num">500+</div><div class="about-stat-label">Products in Stock</div></div><div class="about-stat"><div class="about-stat-num">2010</div><div class="about-stat-label">Est. in Karachi</div></div></div><div class="about-highlights"><div class="about-hi"><div class="about-hi-icon"><i class="fas fa-bolt"></i></div><div class="about-hi-text"><h4>Power Solutions</h4><p>Premium quality chargers for all major Laptop and Chromebook models.</p></div></div><div class="about-hi"><div class="about-hi-icon"><i class="fas fa-memory"></i></div><div class="about-hi-text"><h4>Storage & Memory Upgrades</h4><p>High-performance RAMs,
-HDDs,
-and blazing-fast SSDs for both laptops and desktops.</p></div></div><div class="about-hi"><div class="about-hi-icon"><i class="fas fa-display"></i></div><div class="about-hi-text"><h4>Display Replacements</h4><p>Crystal-clear Laptop LED screens to restore your view.</p></div></div></div></div></div></section>< !-- ═══ FEATURES ═══ --><section id="features"><div class="section-wrap" style="text-align:center; position:relative; z-index:2;"><div class="section-label reveal"> // Why We Are Different</div>
-<h2 class="section-title reveal">SIX PILLARS OF <span style="color:var(--green-bright);">TRUST</span></h2><div class="features-grid"><div class="fcard reveal"><div class="fcard-inner"><div class="ficon"><i class="fas fa-bolt"></i></div><div class="fword">Speed</div><div class="fdesc">Next-gen processors. NVMe SSDs. We test every unit before delivery. Zero compromises.</div><div class="pillar-glow-line"></div></div></div><div class="fcard reveal" style="transition-delay:0.1s"><div class="fcard-inner"><div class="ficon"><i class="fas fa-shield-halved"></i></div><div class="fword">Warranty</div><div class="fdesc">Full local warranty on every machine. Certified engineers. 7-day support,
-always.</div><div class="pillar-glow-line"></div></div></div><div class="fcard reveal" style="transition-delay:0.2s"><div class="fcard-inner"><div class="ficon"><i class="fas fa-truck-fast"></i></div><div class="fword">Delivery</div><div class="fdesc">Same-day Karachi delivery. Insured,
-tracked,
-and handled with care. Nationwide available.</div><div class="pillar-glow-line"></div></div></div><div class="fcard reveal" style="transition-delay:0.3s"><div class="fcard-inner"><div class="ficon"><i class="fas fa-check-double"></i></div><div class="fword">Authentic</div><div class="fdesc">100% genuine box-pack products. No grey market. Direct from official distributors.</div><div class="pillar-glow-line"></div></div></div><div class="fcard reveal" style="transition-delay:0.4s"><div class="fcard-inner"><div class="ficon"><i class="fas fa-headset"></i></div><div class="fword">Support</div><div class="fdesc">Expert technical assistance available 24/7. Our engineers are ready to help you anytime.</div><div class="pillar-glow-line"></div></div></div><div class="fcard reveal" style="transition-delay:0.5s"><div class="fcard-inner"><div class="ficon"><i class="fas fa-tags"></i></div><div class="fword">Value</div><div class="fdesc">Best price guarantee in Karachi. We match any official competitor's price.</div>
- <div class="pillar-glow-line"></div></div></div></div></div></section>< !-- ═══ WHY+CONTACT ═══ --><section id="why"><div class="section-wrap"><div class="why-grid"><div><div class="section-label reveal"> // Why Alfa Biz</div>
-<h2 class="section-title reveal">THE DIFFERENCE</h2><ul style="list-style:none;"><li class="why-item reveal"><span class="why-num">01</span><div><div class="why-h4">Authentic Products</div><div class="why-p">No grey-market. Every laptop comes with official box,
-invoice,
-and full local warranty.</div></div></li><li class="why-item reveal"><span class="why-num">02</span><div><div class="why-h4">Expert Tech Support</div><div class="why-p">Certified engineers across all brands. Help is one call away,
-7 days a week.</div></div></li><li class="why-item reveal"><span class="why-num">03</span><div><div class="why-h4">Best Price Guarantee</div><div class="why-p">We match any local competitor. Best prices in Karachi — always.</div></div></li><li class="why-item reveal"><span class="why-num">04</span><div><div class="why-h4">15+Years Trusted</div><div class="why-p">Established since 2010. Over 10,
-000 happy customers. Our reputation is our greatest asset.</div></div></li></ul></div>< !-- CONTACT --><div class="contact-glass reveal"><div class="cg-label"> // Get In Touch</div>
 
-<div class="cg-info-grid"><div class="cg-info-item"><div class="cg-info-icon"><i class="fas fa-location-dot"></i></div><div class="cg-info-text"><div class="cg-info-label">Location</div><div class="cg-info-val">Karachi,
-PK</div></div></div><div class="cg-info-item"><div class="cg-info-icon"><i class="fas fa-phone"></i></div><div class="cg-info-text"><div class="cg-info-label">Phone</div><div class="cg-info-val"><a href="tel:+923212765705">0321-2765705</a></div></div></div><div class="cg-info-item"><div class="cg-info-icon"><i class="fab fa-whatsapp"></i></div><div class="cg-info-text"><div class="cg-info-label">WhatsApp</div><div class="cg-info-val"><a href="https://wa.me/923212765705" target="_blank">0321-2765705</a></div></div></div><div class="cg-info-item"><div class="cg-info-icon"><i class="fas fa-clock"></i></div><div class="cg-info-text"><div class="cg-info-label">Hours</div><div class="cg-info-val">10:00 – 22:00</div></div></div></div>< !-- WhatsApp CTA Block --><div class="cg-wa-block"><div class="cg-wa-title"><i class="fab fa-whatsapp"></i>ORDER VIA WHATSAPP</div><div class="cg-wa-desc">Fastest way to place an order or ask about any product. We reply within minutes !</div><a class="cg-wa-btn" href="https://wa.me/923212765705?text=Hello%2C%20I%20want%20to%20inquire%20about%20a%20laptop." target="_blank"><i class="fab fa-whatsapp" style="font-size:1rem;"></i>Chat on WhatsApp </a></div><div class="cg-divider"><span>OR LEAVE A MESSAGE</span></div><div class="cg-inputs"><div class="cg-input-group"><input class="cg-input" type="text" id="cgName" placeholder="Your Name" /><input class="cg-input" type="tel" id="cgPhone" placeholder="Phone / WhatsApp" /></div><input class="cg-input" type="email" id="cgEmail" placeholder="Email Address (Optional)" /><textarea class="cg-input cg-textarea" id="cgMsg" placeholder="Your Message or Product Inquiry..."></textarea><button class="cg-send" onclick="sendContact()">SEND MESSAGE</button></div><div style="text-align:center;margin-top:1.2rem;"><div style="display:inline-flex;align-items:center;gap:0.5rem;font-family:'Orbitron',monospace;font-size:0.65rem;color:var(--green);letter-spacing:2px;"><span style="width:8px;height:8px;background:#39ff14;border-radius:50%;animation:pulse 2s infinite;"></span>ONLINE & READY TO HELP · EST. 2010 </div></div><div class="cg-social-connect"><div class="cg-social-label">FOLLOW US</div><div class="cg-socials"><a class="cg-social" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a><a class="cg-social" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a><a class="cg-social" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a><a class="cg-social" href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a></div></div></div></div></div></section>< !-- ═══ FOOTER ═══ --><footer><div class="footer-inner"><div><img src="assets/logo-removebg-preview.png" alt="Alfa Biz" class="footer-logo"
-onerror="this.style.display='none';document.querySelector('.footer-logo-text').style.display='block'" /><div class="footer-logo-text">ALFA BIZ</div><p class="footer-desc">Karachi's most trusted laptop store since 2010. Premium machines, genuine warranty, unbeatable prices. Powering Pakistan' s tech future for 15+years.</p></div><div><div class="footer-h">Navigate</div><ul class="footer-links"><li><a href="index.html"><i class="fas fa-chevron-right"></i>Home</a></li><li><a href="#about"><i class="fas fa-chevron-right"></i>About</a></li><li><a href="products.html"><i class="fas fa-chevron-right"></i>Products</a></li><li><a href="#features"><i class="fas fa-chevron-right"></i>Features</a></li><li><a href="#why"><i class="fas fa-chevron-right"></i>Contact</a></li></ul></div><div><div class="footer-h">Find Us</div><div class="footer-addr">Karachi,
-Sindh<br>Pakistan<br><br>Mon–Sun: 10am – 10pm<br><a href="tel:+923212765705" style="color:var(--green-bright);text-decoration:none;">0321-2765705</a><br><a href="https://wa.me/923212765705" target="_blank" style="color:#25D366;text-decoration:none;">WhatsApp: 0321-2765705</a></div></div></div><div class="footer-bottom"><span class="footer-copy">© 2026 Alfa Biz. Est. 2010. All rights reserved.</span><div class="socials"><a class="soc" href="https://instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a><a class="soc" href="https://facebook.com/" target="_blank"><i class="fab fa-facebook-f"></i></a><a class="soc" href="https://tiktok.com/" target="_blank"><i class="fab fa-tiktok"></i></a><a class="soc" href="https://youtube.com/" target="_blank"><i class="fab fa-youtube"></i></a><a class="soc" href="https://wa.me/923212765705" target="_blank"><i class="fab fa-whatsapp"></i></a></div></div></footer>< !-- WhatsApp Float --><a class="wa-float" href="https://wa.me/923212765705?text=Hello,%20I%20want%20to%20inquire%20about%20a%20laptop." target="_blank" title="Chat on WhatsApp"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg></a>< !-- PRODUCT DETAIL MODAL --><div id="product-modal" class="modal-overlay" onclick="closeModal(event)"><div class="modal-container"><button class="modal-close" onclick="closeModal(event, true)">×</button><div class="modal-left"><span class="modal-brand-badge">ALFA BIZ // PREMIUM</span>
-<div class="modal-img-wrap"><img id="modal-img" src="" alt="Product Image"></div><div class="modal-price-tag" id="modal-price-left">Rs. 0</div></div><div class="modal-right"><div class="modal-category" id="modal-badge-right">LAPTOP</div><h2 class="modal-title" id="modal-title">Product Name</h2><div class="modal-price" id="modal-price-right">Rs. 0</div><div class="modal-divider"></div><div class="modal-section-title">SYSTEM SPECIFICATIONS</div><ul class="modal-specs" id="modal-specs">< !-- Dynamically populated --></ul><p class="modal-description">Experience next-generation performance and sleek build quality. This model is fully tested,
-verified,
-and comes with our store's premium durability warranty.
- </p><div class="modal-meta-grid"><div class="meta-row"><span class="meta-label">Availability:</span><span class="meta-val val-green"><span class="pulse-dot"></span>In Stock</span></div><div class="meta-row"><span class="meta-label">Delivery:</span><span class="meta-val">Free in Karachi (Nationwide Insured)</span></div><div class="meta-row"><span class="meta-label">Warranty:</span><span class="meta-val">Local Warranty Support</span></div></div><div class="modal-actions"><button class="modal-btn-order" id="modal-order-btn"><i class="fab fa-whatsapp"></i>ORDER VIA WHATSAPP → </button><button class="modal-btn-inquire" id="modal-inquire-btn">INQUIRE DETAILS </button></div></div></div></div><script src="products_data.js"></script><script> // ── PRELOADER ──
-const preloader=document.getElementById('preloader');
-const bar=document.getElementById('loader-bar-fill');
-const pct=document.getElementById('loader-pct');
-let progress=0;
-
-const interval=setInterval(()=> {
-    progress +=Math.random() * 18 + 4;
-
-    if (progress >=100) {
-      progress=100;
-      clearInterval(interval);
-
-      setTimeout(()=> {
-          preloader.classList.add('hidden');
-        }
-
-        , 300);
-    }
-
-    bar.style.width=progress + '%';
-    pct.textContent=Math.floor(progress) + '%';
-  }
-
-  , 80);
-
-// ── DRAWER ──
-function toggleDrawer() {
-  document.getElementById('drawer').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('open');
-}
-
-// ── DYNAMIC HOME PRODUCTS RENDER ──
-function renderHomeProducts(cat='all') {
-  const grid=document.getElementById('products-grid');
-  if ( !grid) return;
-
-  // Filter by category
-  let filtered=products;
-
-  if (cat !=='all') {
-    filtered=products.filter(p=> p.cat===cat);
-  }
-
-  // Take top 6
-  const top6=filtered.slice(0, 6);
-
-  // Render
-  grid.innerHTML=top6.map((p, idx)=> {
-      // Badges mapping
-      let badgeHtml='';
-
-      if (p.badge) {
-        let badgeClass='b-new';
-        const lowerBadge=p.badge.toLowerCase();
-        if (lowerBadge==='hot') badgeClass='b-hot';
-        else if (lowerBadge==='sale') badgeClass='b-sale';
-
-        badgeHtml=`<span class="pbadge ${badgeClass}" >$ {
-          p.badge
-        }
-
-        </span>`;
-      }
-
-      // Old price display
-      const oldPriceHtml=p.old ? `<span class="old" >$ {
-        p.old
-      }
-
-      </span>` : '';
-
-      return ` <div class="pcard reveal" data-cat="${p.cat}" style="transition-delay:${idx * 0.1}s" onclick="openProductModalById(${p.id})" > $ {
-        badgeHtml
-      }
-
-      <div class="pimg" ><img src="${p.img}" alt="${p.name}" /></div> <div class="stars" >★★★★★</div> <div class="pname" >$ {
-        p.name
-      }
-
-      </div> <div class="pfooter" > <div class="pprice" >$ {
-        oldPriceHtml
-      }
-
-      $ {
-        p.price
-      }
-
-      </div> <button class="btn-order" onclick="event.stopPropagation(); orderNowById(${p.id})" > <i class="fab fa-whatsapp" ></i> Order Now </button> </div> </div> `;
-    }).join('');
-
-  // Re-trigger intersection observer for dynamic elements
-  if (typeof observer !=='undefined') {
-    document.querySelectorAll('#products-grid .reveal').forEach(r=> observer.observe(r));
-  }
-}
-
-// ── HELPER CLICK HANDLERS BY ID ──
-function openProductModalById(id) {
-  const p=products.find(prod=> prod.id===id);
-  if ( !p) return;
-  openProductModal(p.name, p.spec, p.price, p.img, p.old, p.cat);
-}
-
-function orderNowById(id) {
-  const p=products.find(prod=> prod.id===id);
-  if ( !p) return;
-  orderNow(p.name, p.spec, p.price);
-}
-
-// ── FILTER ──
-function filterP(btn, cat) {
-  document.querySelectorAll('.fbtn').forEach(b=> b.classList.remove('active'));
-  btn.classList.add('active');
-  renderHomeProducts(cat);
-}
-
-// ── ORDER / CART ──
-function orderNow(name, spec, price) {
-  const msg=encodeURIComponent(`Hello Alfa Biz ! I want to order:\n\n📦 *$ {
-      name
-    }
-
-    *\n🔧 $ {
-      spec
-    }
-
-    \n💰 $ {
-      price
-    }
-
-    \n\nPlease confirm availability.`);
-  window.open(`https: //wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-  }
-
-  function addToCart(name, spec, price, img) {
-    const msg=encodeURIComponent(`Hello Alfa Biz ! I'm interested in:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nIs this available?`);
- window.open(`https: //wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
-      }
-
-      // ── CONTACT FORM ──
-      function sendContact() {
-        const name=document.getElementById('cgName').value.trim();
-        const phone=document.getElementById('cgPhone').value.trim();
-        const email=document.getElementById('cgEmail').value.trim();
-        const msg=document.getElementById('cgMsg').value.trim();
-
-        if ( !name || !phone || !msg) {
-          alert('Please fill in your name, phone, and message.');
-          return;
-        }
-
-        const text=encodeURIComponent(`Hello Alfa Biz !\n\n👤 Name: $ {
-            name
-          }
-
-          \n📞 Phone: $ {
-            phone
-          }
-
-          $ {
-            email ? '\n📧 Email: ' + email : ''
-          }
-
-          \n\n💬 Message:\n$ {
-            msg
-          }
-
-          `);
-        window.open(`https: //wa.me/${WA_NUMBER}?text=${text}`, '_blank');
-        }
-
-        // ── REVEAL ON SCROLL ──
-        const reveals=document.querySelectorAll('.reveal');
-
-        const observer=new IntersectionObserver((entries)=> {
-            entries.forEach(e=> {
-                if (e.isIntersecting) {
-                  e.target.classList.add('visible');
-                  observer.unobserve(e.target);
-                }
-              });
-          }
-
-          , {
-          threshold: 0.12
-        });
-      reveals.forEach(r=> observer.observe(r));
-
-      // Render initial products on homepage
-      renderHomeProducts('all');
-
-      // ── PRODUCT DETAIL MODAL CONTROLS ──
-      function openProductModal(name, spec, price, img, oldPrice, category) {
-        document.getElementById('modal-img').src=img;
-        document.getElementById('modal-img').alt=name;
-        document.getElementById('modal-title').textContent=name;
-        document.getElementById('modal-price-left').textContent=price;
-        document.getElementById('modal-price-right').textContent=price;
-
-        const badgeRight=document.getElementById('modal-badge-right');
-        badgeRight.textContent=(category || 'Laptop').toUpperCase();
-
-        const specsUl=document.getElementById('modal-specs');
-        specsUl.innerHTML='';
-
-        if (spec) {
-          const specItems=spec.split(/·|•|\||\n/);
-
-          specItems.forEach(item=> {
-              const trimmed=item.trim();
-
-              if (trimmed) {
-                const li=document.createElement('li');
-                li.textContent=trimmed;
-                specsUl.appendChild(li);
-              }
-            });
-        }
-
-        else {
-          const li=document.createElement('li');
-          li.textContent="High-performance tech specifications";
-          specsUl.appendChild(li);
-        }
-
-        const orderBtn=document.getElementById('modal-order-btn');
-
-        orderBtn.onclick=function() {
-          orderNow(name, spec, price);
-        }
-
-        ;
-
-        const inquireBtn=document.getElementById('modal-inquire-btn');
-
-        inquireBtn.onclick=function() {
-          addToCart(name, spec, price, img);
-        }
-
-        ;
-
-        const modal=document.getElementById('product-modal');
-        modal.classList.add('open');
-        document.body.style.overflow='hidden';
-      }
-
-      function closeModal(event, forceClose=false) {
-        const modal=document.getElementById('product-modal');
-
-        if (forceClose || event.target===modal) {
-          modal.classList.remove('open');
-          document.body.style.overflow='';
-        }
-      }
-
-      window.addEventListener('keydown', (e)=> {
-          if (e.key==='Escape') {
-            const modal=document.getElementById('product-modal');
-
-            if (modal && modal.classList.contains('open')) {
-              modal.classList.remove('open');
-              document.body.style.overflow='';
-            }
-          }
-        });
-      </script> </body> </html>
