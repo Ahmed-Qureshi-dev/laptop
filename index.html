@@ -1330,10 +1330,11 @@
             <div class="pcard-content">
               <div class="pcard-category">${p.cat.toUpperCase()}</div>
               <div class="pname">${p.name}</div>
-              <div class="pcard-subtitle">TAP TO VIEW DETAILS</div>
+              <div class="pcard-specs">${specTags}</div>
               <div class="pcard-footer">
                 <div class="pprice-wrap">
-                  <div class="pprice">${oldPriceHtml}${p.price}</div>
+                  <div class="old">${p.old ? p.old : ''}</div>
+                  <div class="pprice">${p.price}</div>
                 </div>
                 <button class="btn-order" onclick="event.stopPropagation(); orderNowById(${p.id})">
                   ORDER NOW
