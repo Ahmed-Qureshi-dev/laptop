@@ -163,12 +163,8 @@
       width: 0; height: 2px; background: linear-gradient(90deg, var(--green), var(--gold));
       transition: width 0.3s ease;
     }
-    .nav-menu a:hover, .nav-menu a.active {
-      color: var(--green-light);
-    }
-    .nav-menu a:hover::after, .nav-menu a.active::after {
-      width: 100%;
-    }
+    .nav-menu a:hover, .nav-menu a.active { color: var(--green-light); }
+    .nav-menu a:hover::after, .nav-menu a.active::after { width: 100%; }
     .nav-actions { display: flex; align-items: center; gap: 1rem; }
     .nav-cta {
       background: linear-gradient(135deg, var(--green), var(--green-dark));
@@ -228,10 +224,7 @@
       display: flex; align-items: center; justify-content: center;
       transition: all 0.3s;
     }
-    .drawer-close:hover {
-      background: var(--green-glow); border-color: var(--green);
-      color: var(--white);
-    }
+    .drawer-close:hover { background: var(--green-glow); border-color: var(--green); color: var(--white); }
     .drawer-logo { height: 55px; width: auto; filter: drop-shadow(0 0 15px var(--green-glow)); }
     .drawer-links { list-style: none; margin-top: 1rem; }
     .drawer-links li { border-bottom: 1px solid var(--glass-border); }
@@ -242,9 +235,7 @@
       font-size: 1.05rem; letter-spacing: 2px; text-transform: uppercase;
       transition: all 0.3s;
     }
-    .drawer-links a:hover {
-      color: var(--gold); padding-left: 10px;
-    }
+    .drawer-links a:hover { color: var(--gold); padding-left: 10px; }
     .drawer-socials { display: flex; gap: 1rem; margin-top: auto; }
     .drawer-soc {
       width: 42px; height: 42px;
@@ -253,10 +244,7 @@
       justify-content: center; color: var(--text-muted);
       text-decoration: none; transition: all 0.3s; font-size: 1.1rem;
     }
-    .drawer-soc:hover {
-      color: var(--gold); border-color: var(--gold);
-      background: var(--glass-gold); box-shadow: 0 0 15px var(--gold-glow);
-    }
+    .drawer-soc:hover { color: var(--gold); border-color: var(--gold); background: var(--glass-gold); box-shadow: 0 0 15px var(--gold-glow); }
     .drawer-status {
       display: flex; align-items: center; gap: 0.6rem;
       font-family: 'Orbitron', monospace; font-size: 0.7rem;
@@ -308,10 +296,7 @@
       margin-bottom: 3rem; line-height: 1.8; max-width: 700px;
       margin-left: auto; margin-right: auto;
     }
-    .hero-btns {
-      display: flex; justify-content: center; gap: 1.5rem;
-      flex-wrap: wrap;
-    }
+    .hero-btns { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
     .btn-primary {
       background: linear-gradient(135deg, var(--green), var(--green-dark));
       color: var(--white); border: none;
@@ -343,10 +328,7 @@
       border-radius: 12px; transition: all 0.3s;
       text-transform: uppercase;
     }
-    .btn-secondary:hover {
-      background: var(--glass-gold); border-color: var(--gold);
-      box-shadow: 0 0 30px var(--gold-glow);
-    }
+    .btn-secondary:hover { background: var(--glass-gold); border-color: var(--gold); box-shadow: 0 0 30px var(--gold-glow); }
 
     /* ═══ FILTER BAR ═══ */
     .filter-bar {
@@ -362,18 +344,10 @@
       transition: all 0.3s; text-transform: uppercase;
       backdrop-filter: blur(10px);
     }
-    .fbtn:hover {
-      background: rgba(0, 210, 106, 0.1);
-      color: var(--green-light); border-color: var(--green);
-      box-shadow: 0 0 20px rgba(0, 210, 106, 0.15);
-    }
-    .fbtn.active {
-      background: linear-gradient(135deg, rgba(0, 210, 106, 0.2), rgba(255, 215, 0, 0.15));
-      color: var(--gold); border-color: var(--gold);
-      box-shadow: 0 0 25px var(--gold-glow);
-    }
+    .fbtn:hover { background: rgba(0, 210, 106, 0.1); color: var(--green-light); border-color: var(--green); box-shadow: 0 0 20px rgba(0, 210, 106, 0.15); }
+    .fbtn.active { background: linear-gradient(135deg, rgba(0, 210, 106, 0.2), rgba(255, 215, 0, 0.15)); color: var(--gold); border-color: var(--gold); box-shadow: 0 0 25px var(--gold-glow); }
 
-    /* ═══ PRODUCTS GRID ═══ */
+    /* ═══ PRODUCTS GRID — PRODUCTS.HTML CARD STYLE ═══ */
     .products-section {
       padding: 0 2rem 6rem; position: relative; z-index: 2;
     }
@@ -381,174 +355,127 @@
 
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.8rem;
     }
+
+    /* ── Card shell ── */
     .pcard {
-      background: rgba(4, 7, 6, 0.95);
-      border: 1px solid rgba(255, 215, 0, 0.12);
-      border-radius: 26px;
-      overflow: hidden;
       position: relative;
-      transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      background: linear-gradient(180deg, rgba(8, 11, 9, 0.96), rgba(3, 5, 3, 0.95));
+      border: 1px solid rgba(255, 215, 0, 0.14);
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 22px 48px rgba(0, 0, 0, 0.28);
+      transition: transform 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
       cursor: pointer;
     }
     .pcard::before {
       content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.08), transparent 32%),
-                  radial-gradient(circle at bottom right, rgba(255, 215, 0, 0.05), transparent 28%);
-      opacity: 0;
-      transition: opacity 0.35s ease;
-      pointer-events: none;
-      z-index: 1;
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at top left, rgba(255, 215, 0, 0.12), transparent 28%),
+                  radial-gradient(circle at bottom right, rgba(255, 215, 0, 0.06), transparent 32%);
+      opacity: 0; transition: opacity 0.35s ease;
+      pointer-events: none; z-index: 1;
     }
     .pcard:hover::before { opacity: 1; }
     .pcard:hover {
       transform: translateY(-10px);
-      border-color: rgba(255, 215, 0, 0.28);
-      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.32), 0 0 24px rgba(255, 215, 0, 0.16);
+      border-color: rgba(255, 215, 0, 0.25);
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.34), 0 0 24px rgba(255, 215, 0, 0.12);
     }
     .pcard.hidden { display: none; }
 
+    /* ── Image wrap ── */
     .pcard-img-wrap {
       position: relative;
-      height: 240px;
-      background: transparent;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      min-height: 260px;
+      display: flex; align-items: center; justify-content: center;
       overflow: hidden;
-      border-bottom: none;
-    }
-    .pcard-img-wrap::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: transparent;
-      opacity: 0;
-      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(0,0,0,0.08));
     }
     .pcard-img-wrap img {
-      width: 100%;
-      max-width: 100%;
-      max-height: 220px;
+      width: auto; height: 100%;
+      max-width: 100%; max-height: 260px;
       object-fit: contain;
-      transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.22));
+      transition: transform 0.45s ease;
     }
-    .pcard:hover .pcard-img-wrap img {
-      transform: scale(1.08) rotate(-1.5deg);
-    }
+    .pcard:hover .pcard-img-wrap img { transform: scale(1.05); }
     .pcard-img-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 40%, rgba(2, 5, 3, 0.82) 100%);
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.62) 100%);
       pointer-events: none;
     }
 
+    /* ── Badge — top RIGHT like products.html ── */
     .pbadge {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
+      position: absolute; top: 1rem; right: 1rem;
       font-family: 'Orbitron', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 1.8px;
-      padding: 0.45rem 1rem;
-      border-radius: 999px;
-      font-weight: 700;
-      z-index: 3;
-      backdrop-filter: blur(10px);
-      background: rgba(20, 16, 12, 0.92);
-      border: 1px solid rgba(255, 215, 0, 0.18);
-    }
-
-    .favorite-btn,
-    .stars {
-      display: none;
-    }
-
-    .pcard-content {
-      padding: 1.6rem 1.6rem 1.8rem;
-      position: relative;
+      font-size: 0.65rem; letter-spacing: 1.6px;
+      padding: 0.45rem 1rem; border-radius: 999px;
+      font-weight: 800;
+      background: rgba(22, 18, 12, 0.92);
+      border: 1px solid rgba(255, 215, 0, 0.24);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.12);
       z-index: 2;
-      background: rgba(2, 5, 3, 0.92);
     }
+    .b-hot  { background: linear-gradient(135deg, rgba(255,80,80,0.18), rgba(255,180,0,0.12)); color: #ff6b6b; border-color: rgba(255,80,80,0.3); }
+    .b-new  { background: linear-gradient(135deg, rgba(255,215,0,0.24), rgba(255,215,0,0.1)); color: var(--gold); border-color: rgba(255,215,0,0.28); }
+    .b-sale { background: linear-gradient(135deg, rgba(255,215,0,0.24), rgba(255,215,0,0.12)); color: var(--gold); border-color: rgba(255,215,0,0.28); }
+
+    /* ── Content ── */
+    .pcard-content { padding: 1.6rem 1.6rem 1.8rem; position: relative; z-index: 2; }
     .pcard-category {
       font-family: 'Orbitron', monospace;
-      font-size: 0.65rem;
-      letter-spacing: 2.5px;
-      color: var(--gold);
-      text-transform: uppercase;
+      font-size: 0.67rem; letter-spacing: 2.2px;
+      color: rgba(255, 215, 0, 0.95); text-transform: uppercase;
       margin-bottom: 0.75rem;
     }
     .pname {
       font-family: 'Orbitron', monospace;
-      font-size: 1.12rem;
-      font-weight: 800;
-      color: var(--white);
-      margin-bottom: 0.6rem;
-      letter-spacing: 0.8px;
-      line-height: 1.25;
+      font-size: 1.2rem; font-weight: 900;
+      color: #fff; margin-bottom: 0.85rem; line-height: 1.18;
     }
-    .pcard-subtitle {
-      font-size: 0.72rem;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      color: rgba(255, 215, 0, 0.82);
-      margin-bottom: 1.25rem;
-    }
-    .pcard-specs {
-      display: none;
+    .pspec {
+      font-size: 0.84rem; color: var(--text-muted);
+      line-height: 1.6; margin-bottom: 1.2rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .pcard-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 1rem;
-      padding-top: 1.1rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 1rem; padding-top: 1rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
     }
-    .pprice-wrap {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-    }
+    .pprice-wrap { display: flex; flex-direction: column; gap: 0.25rem; }
     .pprice {
       font-family: 'Orbitron', monospace;
-      font-size: 1.28rem;
-      color: var(--gold);
-      font-weight: 800;
-      text-shadow: 0 0 12px rgba(255, 215, 0, 0.18);
+      font-size: 1.3rem; color: var(--gold); font-weight: 900;
+      text-shadow: 0 0 14px rgba(255,215,0,0.16);
     }
     .pprice .old {
-      font-size: 0.75rem;
-      color: rgba(255, 255, 255, 0.55);
-      text-decoration: line-through;
+      font-size: 0.78rem; color: rgba(255,255,255,0.63);
+      text-decoration: line-through; display: block; margin-bottom: 2px;
     }
+
+    /* ── Gold pill Order button ── */
     .btn-order {
-      width: auto;
-      padding: 0.85rem 1.4rem;
+      padding: 0.8rem 1.4rem;
+      border-radius: 999px;
       font-family: 'Orbitron', monospace;
-      font-size: 0.72rem;
-      letter-spacing: 1.8px;
-      border-radius: 12px;
+      font-size: 0.75rem; letter-spacing: 1.7px; font-weight: 800;
+      border: none;
+      background: linear-gradient(135deg, rgba(255,215,0,1), rgba(212,175,55,0.96));
+      color: #120f05;
       cursor: pointer;
-      transition: all 0.3s ease;
-      border: 1px solid rgba(255, 215, 0, 0.35);
-      background: rgba(255, 215, 0, 0.08);
-      color: var(--gold);
-      font-weight: 700;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
+      box-shadow: 0 12px 26px rgba(255,215,0,0.18);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      display: inline-flex; align-items: center; gap: 0.45rem;
     }
     .btn-order:hover {
-      background: rgba(255, 215, 0, 0.16);
-      box-shadow: 0 0 24px rgba(255, 215, 0, 0.18);
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+      box-shadow: 0 18px 32px rgba(255,215,0,0.28);
     }
 
     /* ═══ FOOTER ═══ */
@@ -562,9 +489,7 @@
       display: grid; grid-template-columns: 2fr 1fr 1fr;
       gap: 4rem; padding-bottom: 4rem;
     }
-    .footer-brand {
-      display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem;
-    }
+    .footer-brand { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 1.5rem; }
     .footer-logo-icon {
       width: 45px; height: 45px; border-radius: 12px;
       background: linear-gradient(135deg, var(--green), var(--green-dark));
@@ -581,15 +506,9 @@
       background-clip: text;
     }
     .footer-desc { color: var(--text-muted); font-size: 0.95rem; line-height: 1.8; }
-    .footer-h {
-      font-family: 'Orbitron', monospace; font-size: 0.75rem;
-      letter-spacing: 3px; color: var(--gold); margin-bottom: 1.5rem;
-    }
+    .footer-h { font-family: 'Orbitron', monospace; font-size: 0.75rem; letter-spacing: 3px; color: var(--gold); margin-bottom: 1.5rem; }
     .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
-    .footer-links a {
-      color: var(--text-muted); text-decoration: none; font-size: 0.95rem;
-      transition: all 0.3s; display: flex; align-items: center; gap: 0.6rem;
-    }
+    .footer-links a { color: var(--text-muted); text-decoration: none; font-size: 0.95rem; transition: all 0.3s; display: flex; align-items: center; gap: 0.6rem; }
     .footer-links a:hover { color: var(--green-light); padding-left: 5px; }
     .footer-links a i { font-size: 0.7rem; color: var(--gold); }
     .footer-addr { color: var(--text-muted); font-size: 0.95rem; line-height: 2; }
@@ -608,10 +527,7 @@
       justify-content: center; color: var(--text-muted);
       text-decoration: none; transition: all 0.3s;
     }
-    .soc:hover {
-      color: var(--gold); border-color: var(--gold);
-      background: var(--glass-gold); box-shadow: 0 0 15px var(--gold-glow);
-    }
+    .soc:hover { color: var(--gold); border-color: var(--gold); background: var(--glass-gold); box-shadow: 0 0 15px var(--gold-glow); }
 
     /* WhatsApp Float */
     .wa-float {
@@ -623,10 +539,7 @@
       box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4);
       transition: all 0.3s; border: 2px solid rgba(255,255,255,0.1);
     }
-    .wa-float:hover {
-      transform: scale(1.15) rotate(5deg);
-      box-shadow: 0 8px 35px rgba(37, 211, 102, 0.6);
-    }
+    .wa-float:hover { transform: scale(1.15) rotate(5deg); box-shadow: 0 8px 35px rgba(37, 211, 102, 0.6); }
     .wa-float svg { width: 30px; height: 30px; fill: #fff; }
 
     /* Reveal animation */
@@ -660,9 +573,7 @@
       transform: translateY(40px) scale(0.95);
       transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
-    .modal-overlay.open .modal-container {
-      transform: translateY(0) scale(1);
-    }
+    .modal-overlay.open .modal-container { transform: translateY(0) scale(1); }
     .modal-close {
       position: absolute; top: 1.5rem; right: 1.5rem;
       background: var(--glass-bg); border: 1px solid var(--glass-border);
@@ -671,64 +582,25 @@
       display: flex; align-items: center; justify-content: center;
       transition: all 0.3s; z-index: 10;
     }
-    .modal-close:hover {
-      background: var(--green-glow); border-color: var(--green);
-      color: var(--white); box-shadow: 0 0 20px var(--green-glow);
-    }
+    .modal-close:hover { background: var(--green-glow); border-color: var(--green); color: var(--white); box-shadow: 0 0 20px var(--green-glow); }
     .modal-left {
-      background: linear-gradient(135deg, rgba(0, 210, 106, 0.03), rgba(255, 215, 0, 0.02));
+      background: linear-gradient(135deg, rgba(0,210,106,0.03), rgba(255,215,0,0.02));
       border-right: 1px solid var(--glass-border);
       padding: 3rem;
       display: flex; flex-direction: column;
       justify-content: space-between; align-items: center;
       position: relative;
     }
-    .modal-img-wrap {
-      width: 100%; height: 280px;
-      display: flex; align-items: center; justify-content: center;
-      margin: 2rem 0;
-    }
-    .modal-img-wrap img {
-      max-width: 100%; max-height: 260px;
-      object-fit: contain;
-      filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6));
-      transition: transform 0.5s ease;
-    }
+    .modal-img-wrap { width: 100%; height: 280px; display: flex; align-items: center; justify-content: center; margin: 2rem 0; }
+    .modal-img-wrap img { max-width: 100%; max-height: 260px; object-fit: contain; filter: drop-shadow(0 10px 30px rgba(0,0,0,0.6)); transition: transform 0.5s ease; }
     .modal-img-wrap:hover img { transform: scale(1.05); }
-    .modal-right {
-      padding: 3rem;
-      display: flex; flex-direction: column;
-      overflow-y: auto; max-height: 90vh;
-    }
-    .modal-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.8rem; font-weight: 900;
-      color: var(--white); line-height: 1.3;
-      margin-bottom: 1rem;
-    }
-    .modal-price {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.6rem; font-weight: 700;
-      background: linear-gradient(135deg, var(--green-light), var(--gold));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      background-clip: text; margin-bottom: 1.5rem;
-    }
-    .modal-specs {
-      list-style: none; display: flex; flex-direction: column;
-      gap: 0.6rem; margin-bottom: 1.5rem; padding: 0;
-    }
-    .modal-specs li {
-      font-size: 0.92rem; color: var(--text);
-      display: flex; align-items: center; gap: 0.8rem;
-      padding: 0.4rem 0;
-    }
-    .modal-specs li::before {
-      content: '⚡'; color: var(--green-light); font-size: 0.9rem;
-      filter: drop-shadow(0 0 5px var(--green-glow));
-    }
-    .modal-actions {
-      display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem;
-    }
+    .modal-right { padding: 3rem; display: flex; flex-direction: column; overflow-y: auto; max-height: 90vh; }
+    .modal-title { font-family: 'Orbitron', monospace; font-size: 1.8rem; font-weight: 900; color: var(--white); line-height: 1.3; margin-bottom: 1rem; }
+    .modal-price { font-family: 'Orbitron', monospace; font-size: 1.6rem; font-weight: 700; background: linear-gradient(135deg, var(--green-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin-bottom: 1.5rem; }
+    .modal-specs { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; padding: 0; }
+    .modal-specs li { font-size: 0.92rem; color: var(--text); display: flex; align-items: center; gap: 0.8rem; padding: 0.4rem 0; }
+    .modal-specs li::before { content: '⚡'; color: var(--green-light); font-size: 0.9rem; filter: drop-shadow(0 0 5px var(--green-glow)); }
+    .modal-actions { display: grid; grid-template-columns: 1.2fr 1fr; gap: 1rem; }
     .modal-btn-order {
       background: linear-gradient(135deg, var(--green), var(--green-dark));
       color: var(--white); border: none;
@@ -738,10 +610,7 @@
       display: flex; align-items: center; justify-content: center; gap: 0.6rem;
       box-shadow: 0 4px 20px rgba(0, 210, 106, 0.3);
     }
-    .modal-btn-order:hover {
-      box-shadow: 0 0 30px var(--green-glow);
-      transform: translateY(-2px);
-    }
+    .modal-btn-order:hover { box-shadow: 0 0 30px var(--green-glow); transform: translateY(-2px); }
     .modal-btn-inquire {
       background: transparent; color: var(--gold);
       border: 1.5px solid var(--glass-gold-border);
@@ -749,11 +618,7 @@
       font-size: 0.8rem; font-weight: 700; letter-spacing: 2px;
       border-radius: 12px; cursor: pointer; transition: all 0.3s;
     }
-    .modal-btn-inquire:hover {
-      background: var(--glass-gold);
-      border-color: var(--gold);
-      box-shadow: 0 0 20px var(--gold-glow);
-    }
+    .modal-btn-inquire:hover { background: var(--glass-gold); border-color: var(--gold); box-shadow: 0 0 20px var(--gold-glow); }
 
     /* ═══ RESPONSIVE ═══ */
     @media (max-width: 1024px) {
@@ -765,16 +630,8 @@
       .menu-btn { display: flex; }
       .products-grid { grid-template-columns: 1fr; }
       .footer-inner { grid-template-columns: 1fr; gap: 3rem; }
-
-      .modal-container {
-        grid-template-columns: 1fr;
-        max-height: 85vh; overflow-y: auto;
-      }
-      .modal-left {
-        border-right: none;
-        border-bottom: 1px solid var(--glass-border);
-        padding: 2rem;
-      }
+      .modal-container { grid-template-columns: 1fr; max-height: 85vh; overflow-y: auto; }
+      .modal-left { border-right: none; border-bottom: 1px solid var(--glass-border); padding: 2rem; }
       .modal-img-wrap { height: 200px; margin: 1.5rem 0; }
       .modal-img-wrap img { max-height: 180px; }
       .modal-right { padding: 2rem; max-height: none; }
@@ -867,25 +724,7 @@
         <button class="btn-primary" onclick="window.location.href='products.html'">Explore Inventory</button>
         <button class="btn-gold" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">Get Consultation</button>
       </div>
-      <!-- <div class="stats-bar">
-        <div class="stat-item reveal">
-          <div class="stat-num">15+</div>
-          <div class="stat-label">Years Trust</div>
-        </div>
-        <div class="stat-item reveal">
-          <div class="stat-num">10K+</div>
-          <div class="stat-label">Customers</div>
-        </div>
-        <div class="stat-item reveal">
-          <div class="stat-num">500+</div>
-          <div class="stat-label">Products</div>
-        </div>
-        <div class="stat-item reveal">
-          <div class="stat-num">24/7</div>
-          <div class="stat-label">Support</div>
-        </div>
-      </div>
-    </div> -->
+    </div>
   </section>
 
   <!-- ═══ PRODUCTS ═══ -->
@@ -1068,7 +907,6 @@
         <!-- CONTACT -->
         <div class="contact-glass reveal">
           <div class="cg-label">// Get In Touch</div>
-
           <div class="cg-info-grid">
             <div class="cg-info-item">
               <div class="cg-info-icon"><i class="fas fa-location-dot"></i></div>
@@ -1099,7 +937,6 @@
               </div>
             </div>
           </div>
-
           <div class="cg-wa-block">
             <div class="cg-wa-title"><i class="fab fa-whatsapp"></i> ORDER VIA WHATSAPP</div>
             <div class="cg-wa-desc">Fastest way to place an order or ask about any product. We reply within minutes!</div>
@@ -1107,9 +944,7 @@
               <i class="fab fa-whatsapp" style="font-size:1.1rem;"></i> Chat on WhatsApp
             </a>
           </div>
-
           <div class="cg-divider"><span>OR LEAVE A MESSAGE</span></div>
-
           <div class="cg-inputs">
             <div class="cg-input-group">
               <input class="cg-input" type="text" id="cgName" placeholder="Your Name" />
@@ -1119,14 +954,12 @@
             <textarea class="cg-input cg-textarea" id="cgMsg" placeholder="Your Message or Product Inquiry..."></textarea>
             <button class="cg-send" onclick="sendContact()">SEND MESSAGE</button>
           </div>
-
           <div style="text-align:center;margin-top:1.5rem;">
             <div style="display:inline-flex;align-items:center;gap:0.6rem;font-family:'Orbitron',monospace;font-size:0.7rem;color:var(--green-light);letter-spacing:2px;">
               <span style="width:8px;height:8px;background:var(--green);border-radius:50%;animation:pulse 2s infinite;box-shadow:0 0 10px var(--green-glow);"></span>
               ONLINE & READY TO HELP · EST. 2010
             </div>
           </div>
-
           <div class="cg-social-connect">
             <div class="cg-social-label">FOLLOW US</div>
             <div class="cg-socials">
@@ -1244,24 +1077,20 @@
     if (typeof WA_NUMBER === 'undefined') {
       window.WA_NUMBER = '923212765705';
     }
-    console.log('Scripts loaded. WA_NUMBER:', WA_NUMBER);
-    console.log('Products array:', typeof products !== 'undefined' ? 'Loaded (' + products.length + ' items)' : 'Not loaded');
+
     // ── PRELOADER ──
     const preloader = document.getElementById('preloader');
     const bar = document.getElementById('loader-bar-fill');
     const pct = document.getElementById('loader-pct');
     let progress = 0;
-    
-    // Force hide preloader after 5 seconds
+
     const preloaderTimeout = setTimeout(() => {
       progress = 100;
       bar.style.width = '100%';
       pct.textContent = '100%';
-      setTimeout(() => { 
-        preloader.classList.add('hidden'); 
-      }, 400);
+      setTimeout(() => { preloader.classList.add('hidden'); }, 400);
     }, 5000);
-    
+
     const interval = setInterval(() => {
       progress += Math.random() * 15 + 5;
       if (progress >= 100) {
@@ -1277,11 +1106,7 @@
     // ── NAVBAR SCROLL EFFECT ──
     window.addEventListener('scroll', () => {
       const nav = document.getElementById('navbar');
-      if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+      nav.classList.toggle('scrolled', window.scrollY > 50);
     });
 
     // ── DRAWER ──
@@ -1290,38 +1115,27 @@
       document.getElementById('overlay').classList.toggle('open');
     }
 
-    // ── DYNAMIC HOME PRODUCTS RENDER ──
+    // ── DYNAMIC HOME PRODUCTS RENDER (products.html card style) ──
     function renderHomeProducts(cat = 'all') {
       const grid = document.getElementById('products-grid');
-      if (!grid) {
-        console.error('products-grid not found');
-        return;
-      }
-      if (!products || !Array.isArray(products)) {
-        console.error('products array not found or not an array:', products);
-        return;
-      }
-      let filtered = products;
-      if (cat !== 'all') {
-        filtered = products.filter(p => p.cat === cat);
-      }
+      if (!grid) return;
+      if (!products || !Array.isArray(products)) return;
+
+      let filtered = cat === 'all' ? products : products.filter(p => p.cat === cat);
       const top6 = filtered.slice(0, 6);
+
       grid.innerHTML = top6.map((p, idx) => {
         let badgeHtml = '';
         if (p.badge) {
           let badgeClass = 'b-new';
-          const lowerBadge = p.badge.toLowerCase();
-          if (lowerBadge === 'hot') badgeClass = 'b-hot';
-          else if (lowerBadge === 'sale') badgeClass = 'b-sale';
+          const lb = p.badge.toLowerCase();
+          if (lb === 'hot') badgeClass = 'b-hot';
+          else if (lb === 'sale') badgeClass = 'b-sale';
           badgeHtml = `<span class="pbadge ${badgeClass}">${p.badge}</span>`;
         }
-        const oldPriceHtml = p.old ? `<span class="old">${p.old}</span>` : '';
-        const specArr = p.spec
-          ? p.spec.split(/·|•|\||\n/).map(s => s.trim()).filter(Boolean).slice(0, 3)
-          : [];
-        const specTags = specArr.map(s => `<span class="pcard-spec-tag">${s}</span>`).join('');
+        const oldHtml = p.old ? `<span class="old">${p.old}</span>` : '';
         return `
-          <div class="pcard reveal" data-cat="${p.cat}" style="transition-delay:${idx * 0.1}s" onclick="openProductModalById(${p.id})">
+          <div class="pcard reveal" data-cat="${p.cat}" style="transition-delay:${idx * 0.08}s" onclick="openProductModalById(${p.id})">
             <div class="pcard-img-wrap">
               ${badgeHtml}
               <img src="${p.img}" alt="${p.name}" loading="lazy" />
@@ -1330,23 +1144,21 @@
             <div class="pcard-content">
               <div class="pcard-category">${p.cat.toUpperCase()}</div>
               <div class="pname">${p.name}</div>
-              <div class="pcard-specs">${specTags}</div>
+              <div class="pspec">${p.spec}</div>
               <div class="pcard-footer">
                 <div class="pprice-wrap">
-                  <div class="old">${p.old ? p.old : ''}</div>
-                  <div class="pprice">${p.price}</div>
+                  <div class="pprice">${oldHtml}${p.price}</div>
                 </div>
                 <button class="btn-order" onclick="event.stopPropagation(); orderNowById(${p.id})">
-                  ORDER NOW
+                  <i class="fab fa-whatsapp"></i> Order
                 </button>
               </div>
             </div>
           </div>
         `;
       }).join('');
-      if (typeof observer !== 'undefined') {
-        document.querySelectorAll('#products-grid .reveal').forEach(r => observer.observe(r));
-      }
+
+      document.querySelectorAll('#products-grid .reveal').forEach(r => observer.observe(r));
     }
 
     function openProductModalById(id) {
@@ -1367,64 +1179,37 @@
       renderHomeProducts(cat);
     }
 
-    // ── ORDER / CART ──
+    // ── ORDER / INQUIRE ──
     function orderNow(name, spec, price) {
-      const msg = encodeURIComponent(`Hello Alfa Biz! I want to order:
-
-📦 *${name}*
-🔧 ${spec}
-💰 ${price}
-
-Please confirm availability.`);
+      const msg = encodeURIComponent(`Hello Alfa Biz! I want to order:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nPlease confirm availability.`);
       window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
     }
     function addToCart(name, spec, price, img) {
-      const msg = encodeURIComponent(`Hello Alfa Biz! I'm interested in:
-
-📦 *${name}*
-🔧 ${spec}
-💰 ${price}
-
-Is this available?`);
+      const msg = encodeURIComponent(`Hello Alfa Biz! I'm interested in:\n\n📦 *${name}*\n🔧 ${spec}\n💰 ${price}\n\nIs this available?`);
       window.open(`https://wa.me/${WA_NUMBER}?text=${msg}`, '_blank');
     }
 
     // ── CONTACT FORM ──
     function sendContact() {
-      const name = document.getElementById('cgName').value.trim();
+      const name  = document.getElementById('cgName').value.trim();
       const phone = document.getElementById('cgPhone').value.trim();
       const email = document.getElementById('cgEmail').value.trim();
-      const msg = document.getElementById('cgMsg').value.trim();
-      if (!name || !phone || !msg) {
-        alert('Please fill in your name, phone, and message.');
-        return;
-      }
-      const text = encodeURIComponent(`Hello Alfa Biz!
-
-👤 Name: ${name}
-📞 Phone: ${phone}${email ? '\n📧 Email: ' + email : ''}
-
-💬 Message:
-${msg}`);
+      const msg   = document.getElementById('cgMsg').value.trim();
+      if (!name || !phone || !msg) { alert('Please fill in your name, phone, and message.'); return; }
+      const text = encodeURIComponent(`Hello Alfa Biz!\n\n👤 Name: ${name}\n📞 Phone: ${phone}${email ? '\n📧 Email: ' + email : ''}\n\n💬 Message:\n${msg}`);
       window.open(`https://wa.me/${WA_NUMBER}?text=${text}`, '_blank');
     }
 
     // ── REVEAL ON SCROLL ──
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
+        if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
       });
     }, { threshold: 0.1 });
 
-    // Render initial products
+    // Render initial products then observe all reveals
     renderHomeProducts('all');
-    
-    // Observe reveals after products are rendered
-    const reveals = document.querySelectorAll('.reveal');
-    reveals.forEach(r => observer.observe(r));
+    document.querySelectorAll('.reveal').forEach(r => observer.observe(r));
 
     // ── PRODUCT DETAIL MODAL ──
     function openProductModal(name, spec, price, img, oldPrice, category) {
@@ -1437,24 +1222,18 @@ ${msg}`);
       const specsUl = document.getElementById('modal-specs');
       specsUl.innerHTML = '';
       if (spec) {
-        const specItems = spec.split(/·|•|\||\n/);
-        specItems.forEach(item => {
-          const trimmed = item.trim();
-          if (trimmed) {
-            const li = document.createElement('li');
-            li.textContent = trimmed;
-            specsUl.appendChild(li);
-          }
+        spec.split(/·|•|\||\n/).forEach(item => {
+          const t = item.trim();
+          if (t) { const li = document.createElement('li'); li.textContent = t; specsUl.appendChild(li); }
         });
       } else {
         const li = document.createElement('li');
         li.textContent = "High-performance tech specifications";
         specsUl.appendChild(li);
       }
-      document.getElementById('modal-order-btn').onclick = function() { orderNow(name, spec, price); };
-      document.getElementById('modal-inquire-btn').onclick = function() { addToCart(name, spec, price, img); };
-      const modal = document.getElementById('product-modal');
-      modal.classList.add('open');
+      document.getElementById('modal-order-btn').onclick   = () => orderNow(name, spec, price);
+      document.getElementById('modal-inquire-btn').onclick = () => addToCart(name, spec, price, img);
+      document.getElementById('product-modal').classList.add('open');
       document.body.style.overflow = 'hidden';
     }
     function closeModal(event, forceClose = false) {
@@ -1476,3 +1255,4 @@ ${msg}`);
   </script>
 </body>
 </html>
+
