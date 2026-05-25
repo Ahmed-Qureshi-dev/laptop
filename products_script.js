@@ -145,3 +145,10 @@ window.addEventListener('keydown', (e) => {
 if (typeof products !== 'undefined') {
   renderProducts(products);
 }
+
+if (document.getElementById('searchInput')) {
+  document.getElementById('searchInput').addEventListener('input', filterProducts);
+}
+if (document.getElementById('catFilter')) {
+  document.getElementById('catFilter').addEventListener('change', filterProducts);
+}
